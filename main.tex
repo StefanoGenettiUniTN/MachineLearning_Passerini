@@ -1,0 +1,39 @@
+\documentclass{article}
+\usepackage{epsfig}
+\usepackage{plain}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{url}\usepackage[paperheight=29.7cm,paperwidth=21cm,outer=1.5cm,inner=2.5cm,top=2cm,bottom=2cm]{geometry} % per definizione layout
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{titlesec} % per formato custom dei titoli dei capitoli
+\graphicspath{ {./images/} }
+
+\singlespacing
+
+
+\title{Machine Learning - Passerini}
+\author{Genetti Stefano\\Ossanna Vittoria}
+\date{September 2022}
+
+\begin{document}
+
+\pagenumbering{gobble} 
+\maketitle
+\pagebreak
+
+\tableofcontents
+\pagebreak
+
+\begingroup
+    
+    \renewcommand{\clearpage}{} 
+
+    \input{01- Introduction}
+    \addcontentsline{toc}{chapter}{Introduction}
+    
+\endgroup
+\end{document}
