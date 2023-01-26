@@ -1,39 +1,43 @@
-\documentclass{article}
-\usepackage{epsfig}
-\usepackage{plain}
-\usepackage{setspace}
-\usepackage{hyperref}
-\usepackage{multirow}
-\usepackage{graphicx}
-\usepackage{subcaption}
-\usepackage{url}\usepackage[paperheight=29.7cm,paperwidth=21cm,outer=1.5cm,inner=2.5cm,top=2cm,bottom=2cm]{geometry} % per definizione layout
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
-\usepackage{titlesec} % per formato custom dei titoli dei capitoli
-\graphicspath{ {./images/} }
+\input{prefix}
 
-\singlespacing
+\title{\Huge \textbf{Machine Learning\\} \Large{Andrea Passerini\\a.y. 2022/2023}}
 
-
-\title{Machine Learning - Passerini}
-\author{Genetti Stefano\\Ossanna Vittoria}
-\date{September 2022}
+\author{Stefano Genetti\\Vittoria Ossanna\\Giovanni Valer (revisione \LaTeX)}
 
 \begin{document}
-
-\pagenumbering{gobble} 
 \maketitle
-\pagebreak
+
+\newpage
+\textit{These notes are for the course "Machine Learning" held by professor Andrea Passerini. These notes do not directly cover the laboratory part; still, while discussing the theory many concepts applicable to the laboratory part might be covered. \\
+We tried to include most of the materials used during the lectures or given as reference. Our aim was to create notes that allow to get a clear overview of all the topics and to arrange them in a structured manner, while also being fairly exhaustive.\\
+We tried our best to avoid mistakes while compiling these notes. That being said, a very broad range of topics was to be covered, hence we do not take responsibility for any mistake or imperfection that might be present; still, it would be much appreciated if you reported any of those to us so that we can fix the notes accordingly.\\
+In this \href{https://github.com/StefanoGenettiUniTN/MachineLearning_Passerini.git}{Github repository} you can find the \LaTeX source code, you are free to clone the project and modify it by yourself or just create an issue to include topics and corrections.\\
+We hope that this document will help in the study of this beautiful and exciting subject.}
+
+\newpage
 
 \tableofcontents
-\pagebreak
 
-\begingroup
-    
-    \renewcommand{\clearpage}{} 
 
-    \input{01- Introduction}
-    \addcontentsline{toc}{chapter}{Introduction}
-    
-\endgroup
+    \input{chapters/01_Introduction}
+    \input{chapters/02_decisionTrees}
+    \input{chapters/03_kNearestNeighbours}
+    \input{chapters/04_LinearAlgebra}
+    \input{chapters/05_probabilityTheory}
+    \input{chapters/06_evaluation}
+    \input{chapters/07_parameterEstimation}
+    \input{chapters/08_BayesianNetworks}
+    \input{chapters/09_InferenceInBN}
+    \input{chapters/09.1_LearningBN}
+    \input{chapters/10_BayesianNetworkLab}
+    \input{chapters/11_LinearDiscriminantFunctions}
+    \input{chapters/12_SupportVectiorMachines}
+    \input{chapters/13_NonLinearSVMs}
+    \input{chapters/14_KernelMachines}
+    % \input{chapters/15_ScikitLearnLab}
+    \input{chapters/16_DeepLearning}
+    % \input{chapters/17_DeepLearningLab}
+    \input{chapters/18_UnsupervidesLearning}
+    \input{chapters/19_ReinforcementLearning}
+
 \end{document}

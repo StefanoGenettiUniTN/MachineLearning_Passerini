@@ -1,0 +1,59 @@
+\documentclass[oneside]{book}
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{multicol}
+\usepackage[ruled,vlined,algo2e]{algorithm2e}
+\usepackage[toc, page]{appendix}
+\usepackage{float}
+\usepackage{amsfonts} 
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amssymb}
+\usepackage{derivative}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{amsmath}
+\usepackage{graphicx} %Loading the package
+\usepackage{amsmath} %More flavours for equations
+\usepackage{mathtools} %More flavours for equations
+\usepackage[makeroom]{cancel} %Semplification bar
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{bbold} %identity matrix
+\usepackage{multirow}
+
+\graphicspath{images} %Setting the graphicspath
+\setcounter{secnumdepth}{5}
+
+\lstset{
+    frame=tb, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=none, % display line numbers on the left
+    commentstyle=\color{green}, % comment color
+    keywordstyle=\color{red}, % keyword color
+    stringstyle=\color{blue}, % string color
+    breaklines=true,
+    postbreak=\mbox{\textcolor{green}{$\hookrightarrow$}\space}
+}
+
+
+
+\newcommand\defi[1]{\begin{mdframed}[nobreak=true,hidealllines=false,linecolor=blue!40,linewidth=2pt,backgroundcolor=blue!5,]{#1}\end{mdframed}}
+
+\newcommand\defib[2]{\begin{mdframed}[hidealllines=false,linecolor=blue!40,linewidth=2pt,backgroundcolor=blue!5,]\begin{center}\textbf{{#1}}\end{center}\vspace{2mm}{#2}\end{mdframed}}
+
+\newcommand\theo[1]{\begin{mdframed}[hidealllines=false,linecolor=yellow!40,linewidth=2pt,backgroundcolor=yellow!5,]{#1}\end{mdframed}}
+
+
+\newcommand\sumup[1]{\begin{mdframed}[hidealllines=false,linecolor=red!40,linewidth=2pt,backgroundcolor=red!5,]{#1}\end{mdframed}}
+
+\newcommand {\R}{\mathbb{R}}
+
+\newcommand\tab[1][0.5cm]{\hspace*{#1}} %Tab
+
+\author{
+  Giacomo Fantoni \\
+  \small Telegram: \href{https://t.me/GiacomoFantoni}{@GiacomoFantoni} \\[3pt]
+  Github: \href{https://github.com/giacThePhantom/AlgoritmiStruttureDati}{https://github.com/giacThePhantom/AlgoritmiStruttureDati}}
