@@ -82,7 +82,7 @@
         \defi{\textbf{Multinomial distribution (general case)}\\
         Given $n$ repetition of an event which can end uo in $m$ possible outcome, $p=\{p_1, \dots, p_m\}$ the probability of each of the outcomes, the probability mass function is
         $$P(x_1, \dots, x_m; p_1, \dots, p_m, n) = \dfrac{n!}{\prod\limits_{i=1}^mx_i!}\prod\limits_{i=1}^mp_i^{x_i}$$
-        In this distribution $E[x_i] = np_i$, $Var[x_i] = np_i(1-p_i)$ and $Cov[x_i, x_j] = np_i p_j$
+        In this distribution $E[x_i] = np_i$, $Var[x_i] = np_i(1-p_i)$ and $Cov[x_i, x_j] = -np_i p_j$
         }
         Also this last case is a generalization of every case described above, but four our purposes will not be used, it is reported for completeness.
         
@@ -106,8 +106,9 @@
         $$\sigma_{y}^2 = Var[(y - \mu_{y})^2] = \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} (y - \mu_{y})^2P(x, y)$$
         The covariance (expectation of how much they can co-vary) is:
         $$\sigma_{xy} = E[(x-\mu_{x})(y-\mu_{y})] = \sum_{x\in \mathcal{X}} \sum_{y \in \mathcal{Y}} (x-\mu_{x}) (y - \mu_{y}) P(x, y)$$
-        From these values we can get a coefficient of corrrelation as:
+        From these values we can get a coefficient of correlation as:
         $$\rho = \frac{\sigma_{xy}}{\sigma{x}\sigma{y}}$$
+        This measure is the ratio between the covariance of two variables and the product of their standard deviations; thus, it is essentially a normalized measurement of the covariance, such that the result always has a value between -1 and 1.
         
 \section{Conditional probabilities}
     If two variables are not independent, we can apply some laws and rules to get their probability and conditional probabilities.
@@ -292,12 +293,12 @@
         
         \defi{\textbf{Entropy}\label{def:entropy_probability}\\
         The entropy of the set of symbols is the expected length of a message encoding a symbol assuming each such optimal coding
-        $$H[\mathcal{V}] = E[-\log P(v)] = -\sum_{i=1}^n \log P(v_i)$$
+        $$H[\mathcal{V}] = E[-\log P(v)] = -\sum_{i=1}^n P(v_i) \log P(v_i)$$
         
         }
         
         \defi{\textbf{Cross entropy}\label{def:cross_entropy}\\
-        Considering two distributions $P$ and $Q$ over a variable $X$, the cross entropy between the two distributions measures the expected number of bits needed to code a symbol samples from P using Q instead:
+        Considering two distributions $P$ and $Q$ over a variable $X$, the cross entropy between the two distributions measures the expected number of bits needed to code a symbol sampled from P using Q instead:
         $$H(P;Q) = \mathbb{E}_P[-\log Q(v)] = -\sum_{i=1}^n P(v_i)\log Q(v_i)$$
         
         }

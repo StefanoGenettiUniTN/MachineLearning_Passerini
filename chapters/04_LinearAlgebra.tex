@@ -63,14 +63,12 @@ A set of vectors $v_1,...,v_k$ is \textit{linearly dependent} is it is not linea
 }
 
 \defi{\textbf{Basis} \label{def:basis1}\\
-A set of vectors $\mathcal{B}=\{v_1,...,v_k\}$ is a \textit{basis} for $V$ if any element in $V$ can be uniquely written as a linear combination of vectors $v_i$. A necessary condition is that vectors $x_i$ are linearly independent. All bases of $V$ have the same number of elements, called the \textit{dimension} of the vector space.
+A set of vectors $\mathcal{B}=\{v_1,...,v_k\}$ is a \textit{basis} for $V$ if any element in $V$ can be uniquely written as a linear combination of vectors $v_i$. A necessary condition is that vectors $v_i$ are linearly independent. All bases of $V$ have the same number of elements, called the \textit{dimension} of the vector space.
 }
-\#TODO esempio base
-
 \defi{\textbf{Linear maps} \label{def:linear_maps}\\
 Given two vector spaces $V$ and $V'$, a function $f: V \rightarrow V'$ is a \textit{linear map} if $\forall a_1, a_2 \in \mathcal{R}, v_1, v_2 \in V$:
 \begin{equation*}
-    T(a_1v_1+a_2v_2)=a_1T(v_1)+a_2T(v_2)
+    f(a_1v_1+a_2v_2)=a_1f(v_1)+a_2f(v_2)
 \end{equation*}
 }
 
@@ -159,7 +157,7 @@ In particular the columns of $A$ are linearly independent if and only if $rg(A)=
 }
 
 \section{Matrix derivatives}
-In this section, there are reported some useful properties of matrix calculus. It takes a lot of time to write the formulas in \LaTeX properly, as a result we illustrate them in Figure \ref{fig:matrix_derivatives_properties}.
+In this section, there are reported some useful properties of matrix calculus. It takes a lot of time to write the formulas in \LaTeX     properly, as a result we illustrate them in Figure \ref{fig:matrix_derivatives_properties}.
 
 
 \begin{figure}
@@ -302,6 +300,7 @@ A singular matrix has linearly dependent columns (see Definition \ref{def:indipe
            x_{2} \\
            \vdots \\
            x_{n-1}
+         \\
            x_{n}
          \end{bmatrix} = 0
 \end{equation*}

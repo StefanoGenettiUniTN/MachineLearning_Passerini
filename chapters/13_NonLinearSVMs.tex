@@ -48,9 +48,9 @@ SVM algorithm is applied just replacing $\pmb{x}$ with $\Phi(\pmb{x})$:
 \textbf{Remark:} $\pmb{w}$ in this case is a vector in a three dimensional space. \newline
 
 A linear separation (i.e. hyperplane) in a feature space corresponds to a non-linear separation in an input space (Figure \ref{fig:fromHighToLowSpace}) :
-$$f(\begin{matrix} x_1 \\ x_2\end{matrix}) = \mathit{sgn}(w_1 x_1^2 + w_2 x_1 x_2 + w_3 x_2^2 + w_0)$$
+$$f(\begin{matrix} x_1 \\ x_2\end{matrix}) = \text{sign}(w_1 x_1^2 + w_2 x_1 x_2 + w_3 x_2^2 + w_0)$$
 
-Indeed $w_1 x_1^2 + w_2 x_1 x_2 + w_3 x_2^2 + w_0$ (obtained solving the dot product between $pmb{w}^T$ and $\Phi(\pmb{x})$) in terms of input features, is an ellipsoid. \newline
+Indeed $w_1 x_1^2 + w_2 x_1 x_2 + w_3 x_2^2 + w_0$ (obtained solving the dot product between $\pmb{w}^T$ and $\Phi(\pmb{x})$) in terms of input features, is an ellipsoid. \newline
 
 \begin{figure}
     \centering
@@ -65,7 +65,7 @@ Once data are mapped in a higher dimensional space, we can apply the same SVM so
 In the previous chapter we introduced the regularization theory. In that context, our aim was to combine fitting of the training data, which was measured by means of weighted penalties, and model complexity which in the classification problem was the size of the margin.\\
 The purpose is the same in the regression case. The aim is to retain combination of regularization and data fitting (i.e. correctly approximating the output given the input). Analogously to the classification case, the result is a trade-off between model complexity (smoothness of the function) and data fitting. In essence, regularization means smoothness (i.e. smaller weights, lower complexity) of the learned function. Moreover, the focus is to search for sparsifying loss to have few support vector. For example, in the previous chapter, the fact that support vectors were sparse was a consequence of the hinge loss. \newline
 
-In order to achieve this property in support vector regression, we adopt the $\epsilon$-\textit{intensive loss}. A commonly used loss function in regression, for example in the deep learning context, is the square loss ($l(f(\pmb{x}, y)) = (f(\pmb{x})-y)^2$) or the mean square error (sum up all the square losses which characterizes all the training examples and divide by the number of examples) due to its useful properties (e.g. smoothness). However, if we apply this loss function in the case of SVM we miss an area where we do not pay anything. The only case when we do not pay anything is when $f(\pmb{x})$ is exactly equal to $y$, but when dealing with a regression problem we are considering the continuous domain. The idea is to adopt a loss function which is more tolerant than this in order to achieve the sparsity property. We introduce a regression version of the hinge loss which is called $\epsilon$-\textit{intensive loss} (Figure \ref{fig:insensitive_loss}).
+In order to achieve this property in support vector regression, we adopt the $\epsilon$-\textit{intensive loss}. A commonly used loss function in regression, for example in the deep learning context, is the square loss ($l(f(\pmb{x}), y) = (f(\pmb{x})-y)^2$) or the mean square error (sum up all the square losses which characterizes all the training examples and divide by the number of examples) due to its useful properties (e.g. smoothness). However, if we apply this loss function in the case of SVM we miss an area where we do not pay anything. The only case when we do not pay anything is when $f(\pmb{x})$ is exactly equal to $y$, but when dealing with a regression problem we are considering the continuous domain. The idea is to adopt a loss function which is more tolerant than this in order to achieve the sparsity property. We introduce a regression version of the hinge loss which is called $\epsilon$-\textit{intensive loss} (Figure \ref{fig:insensitive_loss}).
 
 \defi{\textbf{$\epsilon$-insensitive loss}\label{def:eps_insensitive_loss}\\
 \begin{equation}
@@ -113,7 +113,7 @@ $$y_i - f(\pmb{x_i}) \leq \epsilon + \xi$$ and symmetrically: $$f(\pmb{x_i}) - y
 Overall, the resulting learning problem is:
 \begin{equation}
     \text{min}_{\pmb{w} \in \mathcal{X}, w_0 \in \R, \pmb{\xi}, \pmb{\xi^*} \in \R^m} \frac{1}{2} ||\pmb{w}||^2 + C \sum_{i=1}^m (\xi_i + \xi_i^*) \end{equation}
-    $$\text{subject to}$$
+    subject to
     $$\pmb{w}^T \Phi(\pmb{x_i}) + w_0 - y_i \leq \epsilon + \xi_i$$
     $$y_i - (\pmb{w}^T \Phi(\pmb{x_i})+w_0) \leq \epsilon + \xi_i^*$$
     $$\xi_i , \xi_i^* \geq 0$$
@@ -228,7 +228,7 @@ At the end of the day we get the dual formulation which il reported in Figure \r
     \label{fig:svm_regression_dual}
 \end{figure}
 
-$\alpha_i, \alpha_i^* \in [0,C]$ because of $C - \alpha_i \beta_i = 0$ and $C - \alpha_i^* \beta_i = 0$ \newline
+$\alpha_i, \alpha_i^* \in [0,C]$ because of $C - \alpha_i - \beta_i = 0$ and $C - \alpha_i^* - \beta_i = 0$ \newline
 
 As well as in the classification case, the obtained result is still a quadratic optimization problem with box constraints. \newline
 
@@ -259,7 +259,7 @@ The same reasoning works symmetrically for the $*$ case. \newline
 
 We can sum up the obtained results as follows:
 \begin{itemize}
-    \item All patterns with the $\epsilon$-tube, for which $|f(\pmb{x_i})-y_i| < \epsilon$, have $\alpha_i, \alpha_i^* = 0$ and thus don't contribute to the estimated function $f$. All the examples which lie inside the tube are not support vectors.
+    \item All patterns within the $\epsilon$-tube, for which $|f(\pmb{x_i})-y_i| < \epsilon$, have $\alpha_i, \alpha_i^* = 0$ and thus don't contribute to the estimated function $f$. All the examples which lie inside the tube are not support vectors.
     
     \item Patterns for which either $0 < \alpha_i < C$ or $0 < \alpha_i^* < C$ (they cannot be both non-zero at the same time) are on the border of the $\epsilon$-tube, that is $|f(\pmb{x_i})-y_i| = \epsilon$. They are the unbound support vectors. (It is like staying exactly on the confidence one hyperplane).
     

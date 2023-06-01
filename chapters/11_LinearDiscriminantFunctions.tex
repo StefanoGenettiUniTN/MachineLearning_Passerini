@@ -209,7 +209,7 @@ For the sake of brevity, we skip the hat over $\pmb{x}$ and $\pmb{w}$ in the fol
 Similarly to what we have studied for maximum likelihood for probability distributions, we need to find a function of the parameters to be optimized. A reasonable function is the measure of the error on the training set $\mathcal{D}$. This function is called \textit{loss function} and it compares the ground truth with the output of our model. In few words, $l(y, f(\pmb{x}))$ represents the loss that we have to pay for predicting $f(\pmb{x})$ instead of $y$. As a consequence, the loss function is something to be minimized.
 \begin{equation}
     \label{eq:parameterLearning_errorMinimization}
-    E(\pmb{w}; \mathcal{D}) = \sum_{(\pmb{X},y) \in \mathcal{D}} l(y, f(\mathcal{x}))
+    E(\pmb{w}; \mathcal{D}) = \sum_{(\pmb{X},y) \in \mathcal{D}} l(y, f(\pmb(x))
 \end{equation}
 Finding the parameters to minimize the error function can easily lead to overfitting. However, keep in mind that linear classifier are simple models less prone to overfitting with respect to deep neural networks.
 
@@ -241,7 +241,7 @@ Gradient descent works as follows:
 In the case of the linear classifier, the misclassification loss is picewise constant and so it is a poor candidate for gradient descent. Indeed, applying gradient descent with a function like the one represented in Figure \ref{fig:scalini} the gradient is either 0 or it does not exist. In order to apply gradient descent approach, we need functions with a smoother behaviour. As a consequence we adopt a different training rule, the \textit{perceptron training rule}. Following this approach, the error is the sum of the functional margins ($f(\pmb{x})$) of incorrectly classified examples:
 \begin{equation}
     \label{perceptronTrainingRule1}
-    E(\pmb{w}; \mathcal{D}) = \sum_{(\pmb{X},y) \in \mathcal{D}_E} -y f(\pmb{x}))
+    E(\pmb{w}; \mathcal{D}) = \sum_{(\pmb{X},y) \in \mathcal{D}_E} -y f(\pmb{x})s
 \end{equation}
 where $\mathcal{D}_E$ is the set of current training errors for which:
 $$y f(\pmb{x}) \leq 0$$

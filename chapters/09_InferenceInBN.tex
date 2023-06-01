@@ -246,9 +246,7 @@ For this reason, we can exploit the structure of the Bayesian Network to get inf
         The maximal configuration \textit{only} for a root $r$ is:
         $$X_r^{max} = argmax_{X_r} \left[ \prod_{f_j \in adj(X_r)}  \mu_{f_j \rightarrow X_r}  (X_r) \right] $$
         I need the configuration also for the other nodes. When I compute the messages, in principle I also know what is the configuration of the variables I am maximizing over that will give me a certain configuration for $x$. 
-        I need to store the information of the argmax message that is the configuration of the other variables that gave me the configuration. I store another message $\Phi_{f\rightarrow X} (X)$ for this reason. For each step I store the max message in $\mu$ and its configuration in $\Phi$ in the argmax message. \\
-        QUESTA PARTE E' MOLTO CONFUSA anche sulla registrazione
-        
+        I need to store the information of the argmax message that is the configuration of the other variables that gave me the configuration. I store another message $\Phi_{f\rightarrow X} (X)$ for this reason. For each step I store the max message in $\mu$ and its configuration in $\Phi$ in the argmax message.
         \subsubsection{Example}    
             When I get to the end of the chain, I have a message from the node $x_{n-1}$ coming from the last factor. If I maximize over $x_n$ I get the maximum probability, while if I compute the argmax I get the maximal configuration for $x_n$ (${f_{n-1, n}\rightarrow x_n}(x_n)$ stands for the factor that connects $n-1$ to $n$ nodes and that sends message to node $x_n$). 
             $$x_n ^{max} = argmax _{x_n} [\mu_{f_{n-1, n} \rightarrow x_n}(x_n)]$$

@@ -5,12 +5,12 @@ Support Vector Machines (SVM) are a very popular method for linear (and non-line
 \begin{itemize}
     \item they are \textbf{large margin classifiers}: the separating hyperplane is setted withing the largest margin possible between classes
     \item the \textbf{support vector} are the training examples (also only a small subset), the decision boundary is identified on few support vectors
-    \item the \textbf{large margin} properties is formally showed to imply some generalization properties
-    \item can easily be extended to non-linear separation (aka \textit{kernel machines} \ref{cha:kernel_machines})
+    \item the \textbf{large margin} properties are formally showed to imply some generalization properties
+    \item can easily be extended to non-linear separation (also with \textit{kernel machines} \ref{cha:kernel_machines})
 \end{itemize}
 
 \section{Hyperplanes}
-    All the hyperplanes that can correctly separate the two subsets in Figure \ref{fig:hyperplanesSVMs} classify correctly every example. If I use a perceptron I could end up with every of there planes, depending on the starting position. 
+    All the hyperplanes that can separate the two subsets in Figure \ref{fig:hyperplanesSVMs} classify correctly every example. If I use a perceptron I could end up with every of there planes, depending on the starting position. 
     \begin{figure}[ht]
         \centering
         \includegraphics[scale=0.3]{images/hyperplanes_SVMs.png}
@@ -63,7 +63,7 @@ Support Vector Machines (SVM) are a very popular method for linear (and non-line
     Basically, this theorem shows a bound on the generalization error of a classifier which is trained to be a hard margin SVM maximized. It happens that the generalization error (expected error) for unseen example is a combination of:
     \begin{enumerate}
         \item \textbf{sum of margins errors $\nu$} that stands for the component of all margin errors (training errors or examples with not enough confidence)
-        \item \textbf{the second term} depends on number of training examples $m$ (the greater is $m$, the smaller is this factor) and $\rho^2$ which has to do with the margin (the larger the margin, the smaller the error) SONO DUBBIOSA
+        \item \textbf{the second term} depends on number of training examples $m$ (the greater is $m$, the smaller is this factor) and $\rho^2$ which has to do with the margin (the larger the margin, the smaller the error)
     \end{enumerate}
     
     \textbf{Remark:} if $\rho$ is fixed to 1 (canonical hyperplane), maximizing margin corresponds to minimizing $||\pmb{w}||$.

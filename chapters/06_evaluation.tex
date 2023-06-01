@@ -178,8 +178,6 @@ The random variable $X$ represents the predicted value, the random variable $Y$ 
     \rho = \frac{\sum_{i=1}^n (f(x_i)-\Bar{f}(x_i))(y_i-\Bar{y_i})}{\sqrt{\sum_{i=1}^n (f(x_i)-\Bar{f(x_i)})^2 \sum_{i=1}^n (y_i - \Bar{y_i})^2}}
 \end{equation}
 
-\#TODO: sulle slide scrive: where $\Bar{z}$ is the average if $z$ on $\mathcal{D}$. Ma chi è $z$ ?
-
 \section{Performance estimation}
 Computing performance measures on training set would be optimistically biased. We need to rely on different approaches. A typical method to deal with these circumstances is the \textit{Hold-out procedure}.
 
@@ -244,7 +242,9 @@ Example: given a set measurements $X_1, \hdots, X_k$, decide whether the actual 
     
     \item \textit{Type II error}: accept the null hypothesis when it's false.
     
-    \item \textit{Critical region}: the set of random variables $X_1, \hdots, X_k$ taken into account in the test statistic, can be visualized as a vector in a $n$-dimensional space. In this latter, we define a region $C$ such that if the vector lies in $C$ then the null hypothesis is rejected. In orther words the critical region represents the set of values of $T$ for which we reject the null hypothesis. \newline
+    \item \textit{Critical region}: the set of random variables $X_1, \hdots, X_k$ taken into account in the test statistic, can be visualized as a vector in a $n$-dimensional space. In this latter, we define a region $C$ such that if the vector lies in $C$ then the null hypothesis is rejected. In orther words the critical region represents the set of values of $T$ for which we reject the null hypothesis.
+    
+    \item \textit{Critical values}: values on the boundary of the critical region. \newline
     
     \textbf{Example:}\\
     A common null hypothesis is the one which states that a Gaussian distribution $\mathcal{N}(\theta, 1)$ with variance 1 has mean value equals to one ($\theta = 1$). The adopted critical region to face this test statistic is the following one:

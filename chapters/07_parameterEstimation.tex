@@ -5,7 +5,7 @@
 The settings of the environment we are now working in rely on:
 \begin{itemize}
     \item a collection of data sampled from a probability distribution $p(\pmb{x}, y)$
-    \item the probability distribution $p(\pmb{x}, y)$ from which data are driven is known, but the parameters that describe this distribution are unknown (e.g. we know that $p$ is a Gaussian distribution but we do not know the actual mean $\mu$ and variance $\sigma$ (or mean vector and covariance matrix in the multivariate case) )
+    \item the probability distribution $p(\pmb{x}, y)$ from which data are driven is known, but the parameters that describe this distribution are unknown (e.g. we know that $p$ is a Gaussian distribution but we do not know the actual mean $\mu$ and variance $\sigma$ (or mean vector and covariance matrix in the multivariate case)
     \item the data coming from the training set $\mathcal{D} = \{(\pmb{x}_1, y_1), \dots, (\pmb{x}_m, y_m)\}$ are independent and identically distributed samples (i.i.d.) according to $p(\pmb{x}, y)$
     \item the training set $\mathcal{D}$ can be divided into $\mathcal{D}_1, \dots, \mathcal{D}_c$ subsets, with $c$ equal to the number of classes. For each subset we have $n$ examples i.i.d. $\mathcal{D}_i = \{\pmb{x}_1, \dots, \pmb{x}_n\}$
     \item for any \textit{new} example $x$ not in the training set, we compute the posterior probability of the class given the example and the full training set
@@ -30,22 +30,22 @@ From these settings we can further assume some simplifications:
     \item $\pmb{x}$ is independent of $\mathcal{D}_j (j \neq i)$ given $y_i$ and $\mathcal{D}_i$
     $$P(y_i|\pmb{x}, \mathcal{D}) = \frac{p(\pmb{x}|y_i, \mathcal{D}_i)p(y_i|\mathcal{D})}{p(\pmb{x}|\mathcal{D})}$$
     \item without further knowledge
-    $$p(y_i, \mathcal{D}) = \frac{\#y_i}{\#total} = \frac{|\mathcal{D}_i|}{|\mathcal{D}|}$$
+    $$p(y_i | \mathcal{D}) = \frac{\#y_i}{\#total} = \frac{|\mathcal{D}_i|}{|\mathcal{D}|}$$
     \item the normalizing factor $$p(\pmb{x}, \mathcal{D}) = \sum_{i=1}^c p(\pmb{x}|y_i, \mathcal{D}_i)p(y_i|\mathcal{D})$$
 \end{itemize}
 
 At this point, the factor of the Equation \ref{eq:main_eq} we are missing is $p(\pmb{x}|y_i, \mathcal{D}_i)$. In order to do this, we need to estimate the parameters $\theta_i$ of the given distribution.\\
 There are two main option in order to get an estimation of the parameters $\theta_i$:
 \begin{enumerate}
-    \item \textbf{Maximum likelyhood}: we assume that $\Theta_i$ have fixed but unknown values, then we assume that the parameters $\Theta_i$ are the ones that maximize the probability of the observed exampled $\mathcal{D}_i$ (coming from the training set) of being part of $\mathcal{D}_i$.\\
-    The values $\Theta_i$ are used to compute probability for new unseed examples:
+    \item \textbf{Maximum likelihood}: we assume that $\Theta_i$ have fixed but unknown values, then we assume that the parameters $\Theta_i$ are the ones that maximize the probability of the observed examples $\mathcal{D}_i$ (coming from the training set) of being part of $\mathcal{D}_i$.\\
+    The values $\Theta_i$ are used to compute probability for new unseen examples:
     $$P(\pmb{x}|y_i, \mathcal{D}_i) \approx p(\pmb{x}|\Theta_i)$$
     \item \textbf{Bayesian estimation}: we assume that $\Theta_i$ are \textbf{not} fixed, but random variables with some known \textit{prior distribution}, as we observe examples, the prior distribution become a \textit{posterior} distribution. The prediction for the new examples are obtaining by an integral over the possible values of $\Theta_i$
     $$p(\pmb{x}|y_i, \mathcal{D}_i) = \int_{\Theta_i} p(\pmb{x}, \Theta_i|y_i, \mathcal{D}_i) d\Theta_i$$
 \end{enumerate}
 
-\section{Maximum-likelyhood estimation}
-    \label{par:maximum_likelyhood_estim}
+\section{Maximum-likelihood estimation}
+    \label{par:maximum_likelihood_estim}
     This method of parameter estimation is based on an analysis \textit{a posteriori}, aka the data have already been seen.\\
     The estimation of the parameters $\Theta^*$ if the distribution $p(\pmb{x}, y)$ is based on finding the combination that fits at best the distribution of the data in each true class.
     $$\Theta_i^* = argmax_{\Theta_i} p(\Theta_i|\mathcal{D}_i, y_i) = argmax_{\Theta_i} \frac{p(\mathcal{D}_i, y_i|\Theta_i)p(\Theta_i)}{p(\mathcal{D}_i, y_i)}$$
@@ -53,12 +53,12 @@ There are two main option in order to get an estimation of the parameters $\thet
     $$\Theta_i^* = argmax_{\Theta_i} p(\Theta_i|\mathcal{D}_i, y_i) = argmax_{\Theta_i} p(\mathcal{D}_i, y_i|\Theta_i)p(\Theta_i)$$
     $p(\mathcal{D}_i, y_i|\Theta_i)$ is called the likelihood. $p(\Theta_i)$ is called the prior.\\
     This estimation assumes that a prior distribution for the parameters $p(\Theta_i)$ is available.\\
-    The most common formulation for the maximum likelyhood estimation is:
+    The most common formulation for the maximum likelihood estimation is:
     \begin{equation}
         \Theta_i^* = argmax_{\Theta_i} p(\mathcal{D}_i, y_i| \Theta_i)
-        \label{eq:max_likelyhood_common}
+        \label{eq:max_likelihood_common}
     \end{equation}
-    which maximizes the likelyhood of the parameters with respect to the training samples\textbf{ without } prior knowledge distribution of the parameters.\\
+    which maximizes the likelihood of the parameters with respect to the training samples\textbf{ without } prior knowledge distribution of the parameters.\\
     
     Since every class is treated independently, we will drop the redundant notation $\mathcal{D}_i, y_i$ with $\mathcal{D}$ since it is not ambiguous.\\
     
@@ -71,7 +71,7 @@ There are two main option in order to get an estimation of the parameters $\thet
 	\textbf{Remark:}
 	$p(\mathcal{D}| \Theta) = \prod_{j=1}^n p(\pmb{x}_j|\Theta)$ since the elements $\pmb{x}_1, \hdots, \pmb{x}_n$ in the training data are i.i.d..
     
-    \subsection{Maximizing the log-likelyhood}
+    \subsection{Maximizing the log-likelihood}
         In order to maximize the probability previously described, is it clever to consider to maximize the logarithm of the probability.
         This is considered useful because the log function is monotonic and has several properties that simplify the procedure. For instance, computing the derivatives of a product is a pain, while it is easier to derive a summation.
         
@@ -139,15 +139,15 @@ There are two main option in order to get an estimation of the parameters $\thet
     	\sumup{
     	If this example is valid for a univariate (single feature) Gaussian distribution, we can extend the concept to a multivariate Gaussian distribution \ref{def:multi_normal_dist} and get as a result that:
     	\begin{itemize}
-    	    \item the log of the likelyhood is
+    	    \item the log of the likelihood is
     	    $$\sum_{j=1}^n -\frac{1}{2} (x_j - \mu)^t \Sigma^{-1}(x_j - \mu) -\frac{1}{2}log(2\pi)^d|\Sigma|$$
-    	    \item the maximum likelyhood estimates are the vector of the sample means
+    	    \item the maximum likelihood estimates are the vector of the sample means
     	    $$\mu = \frac{1}{n}\sum_{j=1}^n x_j$$
     	    and the covariances matrix
     	    $$\Sigma = \frac{1}{n} \sum_{j=1}^n (x_j - \mu)(x_j - \mu)^t$$
     	\end{itemize}
     	
-    	In the general case of a Gaussian distribution the maximum likelyhood parameters are simply their empirical estimates over the samples.\\
+    	In the general case of a Gaussian distribution the maximum likelihood parameters are simply their empirical estimates over the samples.\\
     	The Gaussian mean is the sample mean while the covariance matrix is the mean of the sample covariances.}
     	
 \section{Bayesian estimation}
@@ -247,7 +247,7 @@ There are two main option in order to get an estimation of the parameters $\thet
     
 \section{Conjugate priors}
     \defi{\textbf{Conjugate prior}\label{def:conj_prior}\\
-    Given the likelyhood function $p(x|\Theta)$ and the prior distribution $p(\Theta)$, then
+    Given the likelihood function $p(x|\Theta)$ and the prior distribution $p(\Theta)$, then
     $$p(\Theta)$$
     is a conjugate prior for $p(x|\Theta)$ if the posterior distribution $p(\Theta|x)$ is in the same family as the prior $p(\Theta)$
     }
@@ -256,7 +256,7 @@ There are two main option in order to get an estimation of the parameters $\thet
         \centering
         \begin{tabular}{|c|c|c|}
             \hline
-            \textbf{Likelyhood} & \textbf{Parameters} & \textbf{Conjugate prior}  \\
+            \textbf{likelihood} & \textbf{Parameters} & \textbf{Conjugate prior}  \\
             \hline
             Binomial & p (\textit{probability}) & Beta  \\
             \hline
@@ -282,17 +282,18 @@ There are two main option in order to get an estimation of the parameters $\thet
                         &= \frac{\Gamma(\alpha)}{\Gamma(\alpha_h)\Gamma(\alpha_t)} \Theta^{\alpha_h -1} (1-\Theta)^{\alpha_t -1}
         \end{align*}
         
-        \subsubsection{Maximum likelyhood estimation}
-            For example, we can prove that given a dataset $\mathcal{D} = \{H, H, T, T, T, H, H\}$ of $N$ iterations (like head/tail toss results), then the likelyhood function becomes
+        \subsubsection{Maximum likelihood estimation}
+        \label{par:maximum_likelyhood_estim}
+            For example, we can prove that given a dataset $\mathcal{D} = \{H, H, T, T, T, H, H\}$ of $N$ iterations (like head/tail toss results), then the likelihood function becomes
             $$p(\mathcal{D}|\Theta) = \Theta^h(1-\Theta)^t$$
-            The maximum likelyhood parameter (maximizing the probability means compute the gradient and zeroing it), we are interested in the derivation with respect to $\Theta$, then the estimation becomes
+            The maximum likelihood parameter (maximizing the probability means compute the gradient and zeroing it), we are interested in the derivation with respect to $\Theta$, then the estimation becomes
             \begin{align*}
-                \pdv{}{\Theta} \log p(\mathcal{D}| \Theta) \longrightarrow \pdv{}{\Theta}h\log \Theta + \log(1-\Theta) &= 0\\
+                \pdv{}{\Theta} \log p(\mathcal{D}| \Theta) \longrightarrow \pdv{}{\Theta}h\log \Theta + t \log(1-\Theta) &= 0\\
                 h\frac{1}{\Theta} - t\frac{1}{1-\Theta} &= 0\\
                 h(1-\Theta) &= t\Theta\\
                 \Theta &= \frac{h}{h+t}
             \end{align*}
-            By this we mean that $t, h$ are a sufficient statistic \ref{def:statistic}. The best maximum likelyhood parameters is the number of successes in the data among the total.
+            By this we mean that $t, h$ are a sufficient statistic \ref{def:statistic}. The best maximum likelihood parameters is the number of successes in the data among the total.
         
         \subsubsection{Bayesian estimation}
             If we try to estimate the parameters through a Bayesian estimation \ref{par:Bayesian_estimation}, then the conjugate prior will still be a Beta distribution \ref{def:beta_dist}.\\
@@ -319,13 +320,13 @@ There are two main option in order to get an estimation of the parameters $\thet
             \end{align*}
             by this we get that: 
             \begin{itemize}
-                \item with high $t, h$ (seen results) then the parameters $\alpha_t, \alpha_h$ become irrelevant, so this estimation becomes closer to the maximum likelyhood estimation,
+                \item with high $t, h$ (seen results) then the parameters $\alpha_t, \alpha_h$ become irrelevant, so this estimation becomes closer to the maximum likelihood estimation,
                 \item with small $t, h$ (seen results) that the prior estimate counts more.
             \end{itemize}
     
     \subsection{Example with a multinomial distribution}
         Let's remind the reader the settings for a multinomial distribution: we have a set with $r$ possible outcomes $x \in \{x^1, \dots, x^r\}$ and for each outcome a (possibly different) probability (the probability over the dataset given the parameters of the distribution).\\
-        The one-hot encoding is defined as $x(x) = [z_1(x), \dots, z_r(x)]$ with $z_k(x) = 1$ if $x = x^k$, 0 otherwise. (STEFANO io non ho mai visto la parola one-hot encoding se non su questa slide).\\
+        The one-hot encoding is defined as $x(x) = [z_1(x), \dots, z_r(x)]$ with $z_k(x) = 1$ if $x = x^k$, 0 otherwise.\\
         The probability mass function for this distribution is
         $$P(x|\Theta) = \prod_{k=1}^r \Theta_k^{z_k(x)}$$
         while its conjugate prior is a Dirichlet distribution \ref{def:diri_dist}:
@@ -337,8 +338,8 @@ There are two main option in order to get an estimation of the parameters $\thet
         Starting from an example: we have a series of data representing the forecast of the past $r$ days as $\mathcal{D} = \{R, C, C, S, S, S, R, C\}$ with R as rainy, C as cloudy and S as sunny.
         Each of the outcome has its own probability $\Theta_R, \Theta_C, \Theta_S$. Since we have the number of times that R, C and R were detected, overall we have probabilities $\Theta_C^{\#C}, \Theta_R^{\#R}, \Theta_S^{\#S}$ therefore $\Theta_C^{3}, \Theta_R^{2}, \Theta_S^{3}$.
         
-        \subsubsection{Maximum likelyhood estimation}
-            We now try to estimate parameters for the multinomial distribution with the maximum likelyhood method \ref{par:maximum_likelyhood_estim}. We are trying to maximize the probability $P(\mathcal{D}|\Theta)$, therefore we look for the maximum of the logarithmic function that describes the probability.
+        \subsubsection{Maximum likelihood estimation}
+            We now try to estimate parameters for the multinomial distribution with the maximum likelihood method \ref{par:maximum_likelihood_estim}. We are trying to maximize the probability $P(\mathcal{D}|\Theta)$, therefore we look for the maximum of the logarithmic function that describes the probability.
             $$\nabla_\Theta \log P(\mathcal{D}|\Theta) = 0$$
             taking into account also that the sum of the probabilities need to be equal to 1
             $$\sum_{i=1}^n \Theta_i = 1$$
@@ -352,7 +353,7 @@ There are two main option in order to get an estimation of the parameters $\thet
                 P(\Theta|\mathcal{D}) &\propto P(\mathcal{D}|\Theta)P(\Theta)\\
                 &\propto \prod_{i=1}^r \Theta_i^{N_i} \prod_{i=1}^r \Theta_i^{\alpha_i -1}
             \end{align*}
-            where $ P(\Theta|\mathcal{D})$ is the posterior, $P(\Theta)$ is the prior (Dirichlet distribution \ref{def:diri_dist}) and $P(\mathcal{D}|\Theta)$ is the likelyhood.\\
+            where $ P(\Theta|\mathcal{D})$ is the posterior, $P(\Theta)$ is the prior (Dirichlet distribution \ref{def:diri_dist}) and $P(\mathcal{D}|\Theta)$ is the likelihood.\\
             Then we have that
             \begin{align*}
                 \prod_{i=1}^r \Theta_i^{N_i} \prod_{i=1}^r \Theta_i^{\alpha_i -1} &= \prod_{i=1}^r \Theta^{N_i + \alpha_i -1}\\

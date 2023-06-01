@@ -242,5 +242,56 @@ $$f(\pmb{x}) = \sum _{i=1} ^m \alpha_i k(\pmb{x}_i, \pmb{x})$$
     		$$(k_\sigma\circ k)(x,x') = exp\left({-\frac{k(x,x)-2k(x,x')+k(x',x')}{2\sigma^2}}\right)$$
 
             This gets us to a composition of kernels. This project us in higher dimensional space. 
-            
+
+    \subsection{Kernel on graphs (WL kernel)}
+        We can also exploit kernel on structured data as graphs. The Weistfeiler-Lehman (WL) graph kernel relies in the WL approximation for graphs isomorphism. This is an efficient way of dealing with kernel on graphs.
+
+        \subsubsection{WL isomorphism test}
+            This test is conducted on two graphs $\mathcal{G} = \{E, V\}, \mathcal{G'} = \{E', V'\}$ with equal number of vertices. 
+            Let $\mathcal{L}(\mathcal{G})$ a label function for each node in $\mathcal{G}$ such that contains $l(v)$ for each node $ v \in V $. There is also a label function for $\mathcal{G}'$ and they need to contain the same labels. 
+            The algorithm goes like this:
+            \begin{enumerate}
+                \item set $l_0 (v) = l(v)$ for all v (set initial labels of the graph $\mathcal{G}$ as the given labels for that graph).
+                \item for each $i \in [ 1 \dots |V| ]$
+                \begin{enumerate}
+                    \item for each node $v$ in $\mathcal{G}, \mathcal{G'}$
+                    \begin{enumerate}
+                        \item construct a list of sorted labels $M_i (v)$ of the adjacent nodes of $v$ of the previous step
+                        $$M_i (v) = \{ l_{i-1} (u) \} \qquad \forall u \text{ adjacent to } v$$
+                        \item concatenate the label for the node $v$ at previous step with the $m_i (v)$ list (Figure \ref{fig:WL_iso_1}), also use a function $label$ that assigns unique labels to the string (Figure \ref{fig:WL_iso_2}) (could be for example an hash function)
+                        $$l_i (v) = label (l_{i-1} (v), M_i(v))$$
+                    \end{enumerate}
+                    \item if $l_i(\mathcal{G}) \neq l_i(\mathcal{G'})$
+                    \begin{enumerate}
+                        \item \textbf{return FALSE}   
+                    \end{enumerate}
+                \end{enumerate}
+                \item \textbf{return TRUE}
+            \end{enumerate}
+
+            \begin{figure}[ht]
+                \centering
+                \includegraphics[scale=0.3]{images/graph_labeling.png}
+                \caption{WL-isomorphism test, we are assigning to each node a string that contains the labels of all adjacent nodes}
+                \label{fig:WL_iso_1}
+            \end{figure}
+
+            \begin{figure}[ht]
+                \centering
+                \includegraphics[scale=0.4]{images/graph_re_labeling.png}
+                \caption{WL-isomorphism test, we using the $label$ function to convert the string into unique labels}
+                \label{fig:WL_iso_2}
+            \end{figure}
+
+        \subsubsection{WL graph kernel}
+            Let $\{\mathcal{G}_0, \dots, \mathcal{G}_h \} = \{ (V, E, l_0), \dots, (V, E, l_h) \}$ a sequence of graphs made from $\mathbf{G}$, where we are identifying the label $i$ as the \textit{i-th} iteration of the WL algorithm.
+            Let $k : \mathcal{G} \times \mathcal{G}' \rightarrow \R$ any kernel on graph. Then the WL graph kernel is defined as 
+            $$k_{WL} ^ h (\mathcal{G}, \mathcal{G}') = \sum _{i=0} ^ h k(\mathcal{G}_i, \mathcal{G}_i ')$$
+
+            \begin{figure}[ht]
+                \centering
+                \includegraphics[scale=0.5]{images/graph_kernel.png}
+                \caption{Execution of the graph kernel. This kernel will use a string in which it will store 1 or 0 respectively if it has found the i-th label in the graph or not. }
+                \label{fig:ML_kernel}
+            \end{figure}
             

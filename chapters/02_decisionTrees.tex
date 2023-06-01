@@ -94,19 +94,28 @@ A technique to reduce complexity is called \textit{pruning}. There are two possi
     \item \textbf{post-pruning}: learn a full tree and successively prune it removing subtrees, replacing whole subtrees with leaf nodes.
 \end{itemize}
 
-With the aim of improving generalization and as a consequence, reducing overfitting, if a \textit{validation set} is available it is possible to implement a post-pruning strategy. The procedure is described in Algorithm ??.
-\#TODO non so il perché non va la scrittura di pseudocodice.\\\\
-\textbf{for each} node $n$ in the tree \textbf{do}\{\\
-\tab Evaluate the performance on the validation set\\
-\tab when removing the subtree rooted at $n$\\
-\}\\\\
-\textbf{if} all node removals worsen performance\{\\
-\tab STOP\\
-\}\\\\
-$n$ $\leftarrow$ node whose removal has the best performance improvement\\\\
-Replace the subtree rooted at $n$ with a leaf\\\\
-Assign to the leaf the majority label of all examples in the subtree\\\\
-Return to 1 \#TODO sostituire con while
+With the aim of improving generalization and as a consequence, reducing overfitting, if a \textit{validation set} is available it is possible to implement a post-pruning strategy. The procedure is described in Algorithm \ref{alg:postPruning}.
+
+\begin{algorithm}
+\caption{Post pruning \label{alg:postPruning}}
+\begin{algorithmic}[1]
+\STATE \textbf{for each} node $n$ in the tree \textbf{do}\{
+\STATE \tab Evaluate the performance on the validation set
+\STATE \tab when removing the subtree rooted at $n$
+\STATE \}
+\STATE \textbf{if} all node removals worsen performance\{
+\STATE \tab STOP
+\STATE \}
+\STATE
+\STATE $n$ $\leftarrow$ node whose removal has the best performance improvement
+\STATE
+\STATE Replace the subtree rooted at $n$ with a leaf
+\STATE
+\STATE Assign to the leaf the majority label of all examples in the subtree
+\STATE
+\STATE \textbf{return} to line 1
+\end{algorithmic}
+\end{algorithm}
 
 \subsection{Dealing with continuous-valued attributes}
 Continuous valued attributes need to be discretized in order to be used in internal nodes tests. Discretization threshold can be chosen to maximize the information gain. A possible procedure is the following:
