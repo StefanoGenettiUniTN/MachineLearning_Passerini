@@ -1,7 +1,7 @@
 \chapter{Inference in BN}
 \label{cha:inter_BN}
 
-The criteria with which a Bayesian Network \ref{cha:bay_net} is built, allows us to get information about the data.\\
+The criteria with which a Bayesian Network (Chapter \ref{cha:bay_net}) is built, allows us to get information about the data.\\
 
 We assume that we have evidence $e$ (what I observe) on the state of a subset of variables $E$ in the model. Therefore Inference amounts as computing the posterior probability of a subset $X$ of the non-observed variables given the observation:
 $$P(X|E = e)$$
@@ -45,7 +45,7 @@ For this reason, we can exploit the structure of the Bayesian Network to get inf
         where $\alpha$ stands for forward messages while $\beta$ for reverse messages.
         $$\sum_{X_2}\sum_{X_2}\dots \sum_{X_{n-1}} \mu_{\alpha}(X_2) P(X_3|X_2) \dots P(X_{n}|X_{n-1})$$
         In general: 
-        $$\mu_\alpha (X_{i}) = \sum _{X_{i-1}} \mu_\alpha(X_{i}) P(X_i|X_{i-1})$$
+        $$\mu_\alpha (X_{i}) = \sum _{X_{i-1}} \mu_\alpha(X_{i-1}) P(X_i|X_{i-1})$$
         For the forward message we can stop when
         $$\mu_\alpha (X_{n}) = \sum_{X_{n-1}} \mu_\alpha (X_{n-1}) P(X_n|X_{n-1})$$
         The only term that is left from the two chain is $P(X_n)$ that can be written as
@@ -63,7 +63,7 @@ For this reason, we can exploit the structure of the Bayesian Network to get inf
         It is clever to store the partial computations we can do the \textit{full message passing}: sending a message from the top to the end of the chain and vice versa, so we have already computed all the partial computation that we could need.\\
     
     \subsection{Inference adding evidence}
-        Typically we have some observed values, and then we want to compute the probability: instead of the sum over the values for the variable that I observed we can plug in th value I actually observed.\\
+        Typically we have some observed values, and then we want to compute the probability: instead of the sum over the values for the variable that I observed we can plug in the value I actually observed.\\
         Let's say I observed $X_1 = x_{e1}, X_3 = x_{e3}$ in a chain of 4 elements and I what to compute $X_2$. This can be done as
         $$P(X_2|X_3 = x_{e3}, X_1 = x_{e1}) = \frac{P(X_1, X_2, X_3, X_4)}{P(X_3 = x_{e3}, X_1 = x_{e1})}$$
         the joint probability can be computed as
@@ -76,7 +76,7 @@ For this reason, we can exploit the structure of the Bayesian Network to get inf
         
         After all it is true that:
         \begin{equation}
-            P(X_n|\textbf{X}_e = \textbf{x}_{e}) = \frac{p(X_n, \textbf{X}_e = \textbf{x}_{e})}{\sum_{X_n} P(X_n, \textbf{X}_e = \textbf{x}_e)}
+            P(X_n|\textbf{X}_e = \textbf{x}_{e}) = \frac{P(X_n, \textbf{X}_e = \textbf{x}_{e})}{\sum_{X_n} P(X_n, \textbf{X}_e = \textbf{x}_e)}
         \end{equation}
         with bold values as evidence.
         
@@ -99,7 +99,7 @@ For this reason, we can exploit the structure of the Bayesian Network to get inf
     
     In order to facilitate the description (and the implementation) we need to go through an alternative representation of the graphical model: a \textit{factor graph}. 
     \defi{\textbf{Factor graph}\label{def:factor_graph}\\
-    It is a graphical representation of a graphical model highlighting its factorization. The factor graph is a undirected graph that has one node for each node in the original graph and also additional nodes for each factor (a factor node had undirected links to each of the node variables in the factor).
+    It is a graphical representation of a graphical model highlighting its factorization. The factor graph is an undirected graph that has one node for each node in the original graph and also additional nodes for each factor (a factor node had undirected links to each of the node variables in the factor).
     }
     \begin{figure}[h]
         \centering
@@ -137,18 +137,18 @@ For this reason, we can exploit the structure of the Bayesian Network to get inf
                 \label{fig:message_BN_fwd}
             \end{figure}
             The value corresponding to the message that $f_s \rightarrow X$ is the multiplication of the incoming messages from its adjacent nodes multiplied by the local probability of the factor.
-            $$\mu_{f_s \rightarrow X} = \sum_{X_1}\dots\sum_{X_{m}} f(X, X_2, \dots, X_m) \prod _{X_i \in adj(f_s) \neq X} \mu_{X_i \rightarrow f_s}$$
+            $$\mu_{f_s \rightarrow X} = \sum_{X_1}\dots\sum_{X_{m}} f(X, X_1, \dots, X_m) \prod _{X_i \in adj(f_s) \neq X} \mu_{X_i \rightarrow f_s}$$
             with $x_1, \dots, x_m$ the nodes that $f_s$ receives messages from (but the destination $X$).\\
             
             Computing the message from the node to a factor becomes simple: 
-            f I have a node that needs to send a message to a factor, then it will be connected only to factors node $F_1, \dots, f_n$. The message from $f \rightarrow X$ is always a function of the variable node, then we
+            I have a node that needs to send a message to a factor, then it will be connected only to factors node $f_1, \dots, f_n$. The message from $f \rightarrow X$ is always a function of the variable node, then we
             \begin{itemize}
                 \item collect messages from the adjacent nodes, therefore multiply for all factors that are not the destination (this is the \textbf{product of the incoming messages} for all neighbours)
                 $$\mu _ {X \rightarrow f} (X) = \prod _{f_i \in adj(X) \neq X} \mu _{f_i \rightarrow X} (X)$$
-                \item if the messages is at the extremes, then we need to take care of leaves. We start sending messages from the leaves $X$, then the message will be equal to one singe it has no incoming messages
+                \item if the messages is at the extremes, then we need to take care of leaves. We start sending messages from the leaves $X$, then the message will be equal to one since it has no incoming messages
                 $$\mu _{X \rightarrow f}(X) = 1$$
                 \item if the extreme is a factor, then we will not have any incoming messages and from this
-                $$\mu_{f \rightarrow X} = \sum_{X_1}\dots\sum_{X_{m}} f(X, X_2, \dots, X_m) \prod _{X_i \in adj(f) \neq X} \mu_{X_i \rightarrow f}$$
+                $$\mu_{f \rightarrow X} = \sum_{X_1}\dots\sum_{X_{m}} f(X, X_1, \dots, X_m) \prod _{X_i \in adj(f) \neq X} \mu_{X_i \rightarrow f}$$
                 we get that it is only function of one variables
                 $$\mu_{f \rightarrow X} = f(X)$$
             \end{itemize}
@@ -157,7 +157,7 @@ For this reason, we can exploit the structure of the Bayesian Network to get inf
             The message computation in a tree structure gets more complicated than a chain (in which it is enough to start from top and end of the chain). Given a tree, we have a root already defined, but in the factor graph we do not.\\
             Therefore we take one node (whatever) and use it as a root so we have leaves defined. From the leaves we send messages and each node will send messages further up. At some point the messages will reach the root. At this point we can compute the probability of the root as the product of the messages coming to the root.
             
-            \sumup{Therefore the procedure for computing the probability for a generic node, is using it a s root, making leaves send messages and eventually getting the messages from the adjacent factors of the node we are interested in.}
+            \sumup{Therefore the procedure for computing the probability for a generic node, is using it as root, making leaves send messages and eventually getting the messages from the adjacent factors of the node we are interested in.}
             
             In order to avoid useless computation, we send all messages up to the root, then from the root we send messages all down to the leaves. The same for the intermediate nodes: this is a \textit{full messages passing scheme}. At this point we do not care about who the root is because we will have received all partial messages to all nodes and factors in each direction. 
             Therefore we can compute whatever we want.\\
@@ -175,7 +175,7 @@ For this reason, we can exploit the structure of the Bayesian Network to get inf
             Let's do inference choosing $x_3$ as root (by chance), then $x_1, x_4$ are leaves.  $x_1, x_4$ can start sending messages to the root $x_3$. 
             Since $x_1, x_4$ are (leaf) nodes, then their message is equal to 1
             $$\mu_{x_1 \rightarrow f_a} (x_1) = 1$$
-            $$\mu_{x_4 \rightarrow f_c} (x_3) = 1$$
+            $$\mu_{x_4 \rightarrow f_c} (x_4) = 1$$
             Once these messages are received by $f_a, F_c$, then the factors can send messages to the next nodes.
             \begin{align*}
                 \mu_{f_a \rightarrow x_2} (x_2) &= \mu_{x_1 \rightarrow f_a} (x_1) \sum _{x_1} f_a(x_1, x_2) \\
@@ -214,7 +214,7 @@ For this reason, we can exploit the structure of the Bayesian Network to get inf
             \end{align*}
         
     \subsection{Most probable configuration, sum-product algorithm}
-        Suppose know that we have a BN network describing the probability of having a certain disease. I want to know if a person has a certain pathology. Suppose we have a number of pathologies that can be correlated to the same sets of symptoms. Maybe some symptom is indicative of a certain disease over another.
+        Suppose that we have a BN network describing the probability of having a certain disease. I want to know if a person has a certain pathology. Suppose we have a number of pathologies that can be correlated to the same sets of symptoms. Maybe some symptom is indicative of a certain disease over another.
         I want to get the \textbf{most probable configuration} as the most probable configuration for the variable I do not know (having the disease). It is highly unlikely that the symptoms are caused from more than one disease.
         $$\textbf{X}^{max} = argmax _{\textbf{X}} p(X)$$
         this is the most probable explanation that \textit{jointly} maximizes the probability.
@@ -228,15 +228,15 @@ For this reason, we can exploit the structure of the Bayesian Network to get inf
         For the chain-like structure, we end up with the very same reasoning proposed in the previous sections:
         \begin{align*}
             max_{\textbf{X}} p(\textbf{X}) &= max_{x_1}\dots max_{x_n} [p(x_1)p(x_2|x_1)\dots p(x_n|x_{n-1})]\\
-            &= max_{x_1}[p(x_1)p(x_2|x_1)]\dots max_{n}[p(x_{n-1}|x_n)]
+            &= max_{x_1}[p(x_1)p(x_2|x_1)]\dots max_{x_n}[p(x_{n-1}|x_n)]
         \end{align*}
         We can call these local computations, again, \textit{messages}:
-        $$\mu_\beta (x_{n-1}) = max_{n}[p(x_{n-1}|x_n)$$
+        $$\mu_\beta (x_{n-1}) = max_{x_n}[p(x_n|x_{n-1})$$
         which won't be equal to one, but it is the probability.
         In the general message passing algorithm (sum-product algorithm), we replace the sum with a max:
         \begin{align*}
             \mu_{f \rightarrow x} (x) &= max_{x_1, \dots, x_m} \left[ f(x, x_1, \dots, x_m) \prod _{x_m \in adj(x) \neq x} \mu_{x_m \rightarrow f}(x_m) \right]\\
-            &= \prod_{f_j \in adj(x) \neq f} \mu_{f_j \rightarrow x}(x)
+            \mu_{x \rightarrow f} (x) &= \prod_{f_j \in adj(x) \neq f} \mu_{f_j \rightarrow x}(x)
         \end{align*}
         
         There is however a problem with this operation: if I compute the maximization locally (starting from the end and going to to the top) I do not know the configuration that maximize the configuration. 
@@ -274,18 +274,18 @@ For this reason, we can exploit the structure of the Bayesian Network to get inf
             When we compute products of probabilities ($0 < p < 1$) the number becomes smaller and smaller: therefore we can get across the \textit{underflow issue}. In order to avoid this problem we typically use the $\log$ since it is monotonic and allows to replays multiplication with summation. 
         
     \subsection{Exact inference on general graphs}
-        These algorithm can not be applied on graphs that do not produce tree-structure factor graphs. If we have BN that do not satisfy these conditions (like containing indurected loops) these algorithms can not be applied anymore but there are very similar algorithms (that use slightly similar intermediate structures as \textit{junction trees} instead of factor graphs). 
+        These algorithm can not be applied on graphs that do not produce tree-structure factor graphs. If we have BN that do not satisfy these conditions (like containing undirected loops) these algorithms can not be applied anymore but there are very similar algorithms (that use slightly similar intermediate structures as \textit{junction trees} instead of factor graphs). 
         In junction trees the nodes contain clusters of variables (which can contain loops) and the apply the very same idea described in the previous paragraphs. This algorithm becomes exponential with the size of the cluster. 
-        What happens in reality is that we need to aproximate because we can not affor exact inference in these cases. There is a lot of research going on that looks for the best way to approximate inference such as:
+        What happens in reality is that we need to approximate because we can not afford exact inference in these cases. There is a lot of research going on that looks for the best way to approximate inference such as:
         \begin{itemize}
             \item \textbf{looply belief propagation} that consists in message passing on the original graph even if it contains loops
             \item \textbf{variational methods} that are deterministic approximations assuming the posterior probability factorizes in a particular way
-            \item \textbf{sampling methods} that approximate posterior with getting sampels from the network
+            \item \textbf{sampling methods} that approximate posterior with getting samples from the network
         \end{itemize}
-        In the looply belief propagation and we build a factor graph, the message flows indefinitely. This methods allows the message passing through loops deciding a scheme of message sending. The node possibly recomputes some messages, this implies that for every iteration, values are recomputed. 
+        In the looply belief propagation we build a factor graph, the message flows indefinitely. This methods allows the message passing through loops deciding a scheme of message sending. The node possibly recomputes some messages, this implies that for every iteration, values are recomputed. 
         If the value shrinks, the network is converging (all messages do not change), but there is no guarantee that this will happen. The maximal configurations and maximum probabilities will not be exact but approximations. \\
         
-        In the sampling methods, I get a set of configuration of this network is compatible with the probability. Then we can sample from the distribution and check if they are compatible with the configuration we intend to verify. It is tricky to sample from the distribution.
-        So what er do is Monte Carlo Markov Chain (MCMC): we do not sample from posterior, but from a random process that get progressively closer to the posterior. This means that the state of the process is a configuration, and a new state is generated from moving some variables (change of state). 
+        In the sampling methods, I get a set of configuration of this network which is compatible with the probability. Then we can sample from the distribution and check if they are compatible with the configuration we intend to verify. It is tricky to sample from the distribution.
+        So what we do is Monte Carlo Markov Chain (MCMC): we do not sample from posterior, but from a random process that get progressively closer to the posterior. This means that the state of the process is a configuration, and a new state is generated from moving some variables (change of state). 
         We move in this space according to a probabilistic model, given certain conditions, it converges to a configuration that can be used as samples.
         

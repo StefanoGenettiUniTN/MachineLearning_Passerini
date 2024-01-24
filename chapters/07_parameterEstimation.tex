@@ -31,7 +31,7 @@ From these settings we can further assume some simplifications:
     $$P(y_i|\pmb{x}, \mathcal{D}) = \frac{p(\pmb{x}|y_i, \mathcal{D}_i)p(y_i|\mathcal{D})}{p(\pmb{x}|\mathcal{D})}$$
     \item without further knowledge
     $$p(y_i | \mathcal{D}) = \frac{\#y_i}{\#total} = \frac{|\mathcal{D}_i|}{|\mathcal{D}|}$$
-    \item the normalizing factor $$p(\pmb{x}, \mathcal{D}) = \sum_{i=1}^c p(\pmb{x}|y_i, \mathcal{D}_i)p(y_i|\mathcal{D})$$
+    \item the normalizing factor $$p(\pmb{x} | \mathcal{D}) = \sum_{i=1}^c p(\pmb{x}|y_i, \mathcal{D}_i)p(y_i|\mathcal{D})$$
 \end{itemize}
 
 At this point, the factor of the Equation \ref{eq:main_eq} we are missing is $p(\pmb{x}|y_i, \mathcal{D}_i)$. In order to do this, we need to estimate the parameters $\theta_i$ of the given distribution.\\
@@ -157,7 +157,7 @@ There are two main option in order to get an estimation of the parameters $\thet
     $$p(x|y_i, \mathcal{D}_i) = \int_{\Theta_i} p(x, \Theta_i|y_i, \mathcal{D}_i) d\Theta_i$$
     The probability of $\pmb{x}$ given each class $y_i$ is independent of the other classes $y_j$ with $i \neq j$. For simplicity we write:
     $$p(\pmb{x}|\mathcal{D}) = \int_{\Theta} p(\pmb{x}, \Theta|\mathcal{D}) d\Theta$$
-    $$p(\pmb{x}|\mathcal{D}) = \int_{\Theta} p(\pmb{x} |\Theta,\mathcal{D}) p(\Theta | \mathcal{D}) d\Theta$$ 
+    $$p(\pmb{x}|\mathcal{D}) = \int_{\Theta} p(\pmb{x} |\Theta) p(\Theta | \mathcal{D}) d\Theta$$ 
     where $\mathcal{D}$ is the dataset for a certain class $y$ and $\Theta$ the parameters of its distribution.\\
     
     Let's proceed also in this case considering a Gaussian \ref{def:gaussian_normal} distribution with unknown parameters $\Theta$.\\
@@ -195,7 +195,7 @@ There are two main option in order to get an estimation of the parameters $\thet
         \includegraphics[scale=0.4]{images/bayesian_univariate_gaussian_inter_calculus.png}
     \end{figure}
     From the last step, we can see that this composition behaves like a normal distribution itself
-    $$p(\mu|\mathcal{D}) = \frac{1}{\sqrt{2\pi}\sigma_n} e^{\frac{1}{2} (\frac{(\mu - \mu_n)}{\sigma^n})^2}$$
+    $$p(\mu|\mathcal{D}) = \frac{1}{\sqrt{2\pi}\sigma_n} e^{\frac{1}{2} (\frac{(\mu - \mu_n)}{\sigma_n})^2}$$
     then we can put the last two equation as equal (the step by step explanation is omitted). 
     
     Solving for $\mu_n$ and $\sigma_n^2$ we get
@@ -238,10 +238,10 @@ There are two main option in order to get an estimation of the parameters $\thet
     \defi{\textbf{Statistic}\label{def:statistic}\\
     Any function on a set of samples $\mathcal{D}$ is a statistic, a sufficient statistic
     $$\textbf{s} = \Phi(\mathcal{D})$$
-    respects the following statement:
+    if respects the following statement:
     $$P(\mathcal{D}|\textbf{s}, \Theta) = P(\mathcal{D}|\textbf{s})$$
     If $\Theta$ is a random variable, a sufficient statistic \textbf{s} contains all the relevant information about $\mathcal{D}$ in order to get the same and correct probability:
-    $$p(\Theta|\mathcal{D}, \textbf{s}) = \frac{p(\mathcal{D}| \Theta, \textbf{s})p(\Theta|\textbf{s})}{p(\Theta|\textbf{s})} = p(\Theta|\textbf{s})$$
+    $$p(\Theta|\mathcal{D}, \textbf{s}) = \frac{p(\mathcal{D}| \Theta, \textbf{s})p(\Theta|\textbf{s})}{p(\mathcal{D}|\textbf{s})} = p(\Theta|\textbf{s})$$
     }
     A sufficient statistic for a Gaussian distribution are sample mean and covariance. 
     
@@ -252,7 +252,7 @@ There are two main option in order to get an estimation of the parameters $\thet
     is a conjugate prior for $p(x|\Theta)$ if the posterior distribution $p(\Theta|x)$ is in the same family as the prior $p(\Theta)$
     }
     
-    \begin{table}
+    \begin{table}[H]
         \centering
         \begin{tabular}{|c|c|c|}
             \hline

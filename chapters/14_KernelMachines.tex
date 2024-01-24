@@ -6,7 +6,7 @@ Therefore is not specific to SVMs but it becomes computationally unfeasible in h
 Also you need to find the correct map and it is a non trivial procedure.
 The dual formulation of the SVMs (both classification and regression), the feature map only appear in dot products, which gets really expensive.\\
 
-For SVMs we can do non-linear learning in a different way, this allows with infinite dimention spaces (the \textit{kernel} trick).\\
+For SVMs we can do non-linear learning in a different way, this allows with infinite dimension spaces (the \textit{kernel} trick).\\
 
 \defi{\textbf{Kernel trick}\label{def:kernel_trick}\\
 The \textit{kernel trick} consists in replacing the dot products that appear in the dual formulation of non-linear SVMs with an equivalent kernel function:
@@ -18,42 +18,15 @@ As before, the dual optimization problem is
 $$max_{\alpha \in \R^m}\sum_{i=1}^m \alpha_i - 
     \frac{1}{2} \sum_{i} \sum_{j} \alpha_i y_i \alpha_j y_j \Phi(\pmb{x_i}) ^T \Phi(\pmb{x_j}) $$
 in which $\Phi$ only appears as dot product.
-subejct to:
+subject to:
 $$\alpha_i \geq 0 \quad i = 1, \dots, m$$
 $$\sum_{i=1}^m \alpha_i y_i = 0$$
 The dual decision function is
 $$f(\pmb{x}) = \sum _{i=1} ^m \alpha_i y_i \Phi(\pmb{x}_i)^T \Phi(\pmb{x'}) = \sum _{i=1} ^m \alpha_i y_i k(\pmb{x}_i , \pmb{x'})$$
 in which $\Phi(\pmb{x}_i)^T \Phi(\pmb{x'})$ is in fact the dot product. I can replace the dot product with $k(\pmb{x}, \pmb{x'}) = \Phi(\pmb{x}_i)^T \Phi(\pmb{x'})$, since $\pmb{x}$ does not appear anywhere else, we are done.\\
 
-\textbf{Kernelizing different SVMs}\\
-This procedures also works for different types of SVMs, therefore we can make appear $\Phi$ only in dot products. In Figure \ref{fig:SVM_regression_kernel} an example for regression.\\
-\begin{figure}[ht]
-    \centering
-    \includegraphics[scale=0.5]{images/kernel_SVM_regression.png}
-    \caption{Procedure applied for SVM used in a regression case}
-    \label{fig:SVM_regression_kernel}
-\end{figure}
-
-\textbf{Kernelizing a perceptron}\\
-The kernel procedure can be also be applied on perceptrons: a linear function of a perceptron \textit{kernelized} becomes a non-linear function.\\
-We can take the dual formulation of the perceptron. Remember that in kernel machines (in both regression and classification), $f(x)$ is a combination of the sum over the train examples coefficient times the kernel function.
-For a classic stochastic perceptron, the procedure is the following: at first we set 
-$$\pmb{w} = 0$$
-then we iterate until all examples are correctly classified (stochastic perceptron) and we update each incorrectly classified examples: 
-$$\pmb{w} \leftarrow \pmb{w} + \eta y_i \pmb{x}_i$$
-We learn this coefficient going through the data. \\
-
-For a kernel perceptron it becomes: 
-at first we initialize
-$$\alpha_i = 0 \quad \forall i$$
-then we iterate through the examples and for each miss-classified example we perform an update:
-$$\alpha_i \leftarrow \alpha_i + \eta y_i$$
-The kernel perceptron classification function becomes
-$$f(\pmb{x}) = \sum _{i=1} ^m \alpha_i k(\pmb{x}_i, \pmb{x})$$
-
-
 \section{What are kernels}
-    Let's see and example of a polynomial mapping (both homogeneous and inhomoeneous). 
+    Let's see an example of a polynomial mapping (both homogeneous and inhomogeneous). 
     \begin{figure} [ht]
         \centering
         \includegraphics[scale=0.5]{images/homo_poly.png}
@@ -64,8 +37,8 @@ $$f(\pmb{x}) = \sum _{i=1} ^m \alpha_i k(\pmb{x}_i, \pmb{x})$$
     \textbf{A kernel it always correspond to a dot product in some feature space.}
     For each piece of the sum of the second line, we need to to separate $\pmb{x}$ from $\pmb{x}'$. 
     Therefore, in this case the dot product corresponds to $\Phi(\pmb{x})^T \Phi(\pmb{x}')$, which makes it a dot product (polynomial mapping, aside from the coefficient). 
-    We did not explicitely compute $\Phi$ but we computed only at input-space level.\\
-    In this case we compute two summation instead of three, bit with greater feature spaces and powers then we get a large advantage.
+    We did not explicitly compute $\Phi$ but we computed only at input-space level.\\
+    In this case we compute two summation instead of three, but with greater feature spaces and powers then we get a large advantage.
     We are computing a polynomial mapping in a non-explicit way.\\
 
     It is also more effective in the case of an inhomogeneous polynomial kernel, in which not only we have combination of degree $d$ but also all combination with degree\textit{ up to} d $\leq d$. This increases a lot the number of features. 
@@ -96,7 +69,7 @@ $$f(\pmb{x}) = \sum _{i=1} ^m \alpha_i k(\pmb{x}_i, \pmb{x})$$
     In many cases, if we build learning systems on non-vector object we have to invent the kernel ourselves, therefore we need to verify that it is a valid one. 
     
     \defi{\textbf{Gram matrix}\label{def:gram_matrix}\\
-    Given examples $\{\pmb{x}_1, \dots, \pmb{x}_m\}$ and a kernel function $k$, the \textit{Gram matrix K} is the symmetric matrix pf pairwise kernels between examples:
+    Given examples $\{\pmb{x}_1, \dots, \pmb{x}_m\}$ and a kernel function $k$, the \textit{Gram matrix K} is the symmetric matrix of pairwise kernels between examples:
     $$K_{ij} = k(\pmb{x}_i, \pmb{x}_j) \quad \forall i, j$$ 
     This matrix is symmetric. 
     }
@@ -117,6 +90,32 @@ $$f(\pmb{x}) = \sum _{i=1} ^m \alpha_i k(\pmb{x}_i, \pmb{x})$$
         \item find corresponding feature map: explication of $\Phi$ dot-product combination by making the feature map explicit
         \item use kernel combination properties in order to build a new kernel, the operation that we can perform on kernels will preserve their properties.
     \end{itemize}
+
+\textbf{Kernelizing different SVMs}\\
+This procedures also works for different types of SVMs, therefore we can make appear $\Phi$ only in dot products. In Figure \ref{fig:SVM_regression_kernel} an example for regression.\\
+\begin{figure}[ht]
+    \centering
+    \includegraphics[scale=0.5]{images/kernel_SVM_regression.png}
+    \caption{Procedure applied for SVM used in a regression case}
+    \label{fig:SVM_regression_kernel}
+\end{figure}
+
+\textbf{Kernelizing a perceptron}\\
+The kernel procedure can be also be applied on perceptrons: a linear function of a perceptron \textit{kernelized} becomes a non-linear function.\\
+We can take the dual formulation of the perceptron. Remember that in kernel machines (in both regression and classification), $f(x)$ is a combination of the sum over the train examples coefficient times the kernel function.
+For a classic stochastic perceptron, the procedure is the following: at first we set 
+$$\pmb{w} = 0$$
+then we iterate until all examples are correctly classified (stochastic perceptron) and we update each incorrectly classified examples: 
+$$\pmb{w} \leftarrow \pmb{w} + \eta y_i \pmb{x}_i$$
+We learn this coefficient going through the data. \\
+
+For a kernel perceptron it becomes: 
+at first we initialize
+$$\alpha_i = 0 \quad \forall i$$
+then we iterate through the examples and for each miss-classified example we perform an update:
+$$\alpha_i \leftarrow \alpha_i + \eta y_i$$
+The kernel perceptron classification function becomes
+$$f(\pmb{x}) = \sum _{i=1} ^m \alpha_i k(\pmb{x}_i, \pmb{x})$$
 
 \section{Types of kernels}
     Two principal types of kernels are 
@@ -205,7 +204,7 @@ $$f(\pmb{x}) = \sum _{i=1} ^m \alpha_i k(\pmb{x}_i, \pmb{x})$$
             We have to compute over every combination of features. The feature space that comes out of it is more complex. This already explodes the feature spaces. \\
             Still, this is a valid combination. 
 
-        \subsubsection{Liner combination}
+        \subsubsection{Linear combination}
             We can always multiply a kernel by a scalar, provided that the scalar is non-negative (would invert every prediction). We can define a kernel as linear combination of kernels. 
     		$$k_{sum}(x, x') = \sum_{k=1}^K\beta_k k_k(x,x')$$
             Since understanding which kernel to use for a specific problem is non trivial, we can use a linear combination of different kernels and then learn parameters of kernels $\beta$ along with learning $\alpha$. 
@@ -229,14 +228,14 @@ $$f(\pmb{x}) = \sum _{i=1} ^m \alpha_i k(\pmb{x}_i, \pmb{x})$$
             This becomes easy when the $k_{member}$ function is a delta function. 
 
         \subsubsection{Kernel normalization}
-            When working with structures, a problem could be that you use different dimensional objects (the similarity of a ling sequence will be higher than the one computed on a short sequence). 
+            When working with structures, a problem could be that you use different dimensional objects (the similarity of a long sequence will be higher than the one computed on a short sequence). 
             Therefore we need to normalize our kernels by taking into account the size of the structure
             $$\hat{k}(x,x') = \frac{k(x,x')}{\sqrt{k(x,x)k(x',x')}}$$
             At the denominator we get exactly the norm. 
-            This particular normalization is the \textit{cosin normalization} because it takes into account the angle between the two (we are getting rid of th esize of the object). 
+            This particular normalization is the \textit{cosine normalization} because it takes into account the angle between the two (we are getting rid of the size of the object). 
 
         \subsubsection{Kernel composition}
-            We can build not only by combining, but also via composition. Instead of having $x^T x$ in the Gaussian kernel, we can plug another kernel and put is as input of the Gaussian kernel. 
+            We can build not only by combining, but also via composition. Instead of having $x^T x$ in the Gaussian kernel, we can plug another kernel and put it as input of the Gaussian kernel. 
             
     		$$(k_{d,c}\circ k)(x,x') = (k(x,x')+c)^d$$
     		$$(k_\sigma\circ k)(x,x') = exp\left({-\frac{k(x,x)-2k(x,x')+k(x',x')}{2\sigma^2}}\right)$$
@@ -269,14 +268,14 @@ $$f(\pmb{x}) = \sum _{i=1} ^m \alpha_i k(\pmb{x}_i, \pmb{x})$$
                 \item \textbf{return TRUE}
             \end{enumerate}
 
-            \begin{figure}[ht]
+            \begin{figure}[H]
                 \centering
                 \includegraphics[scale=0.3]{images/graph_labeling.png}
                 \caption{WL-isomorphism test, we are assigning to each node a string that contains the labels of all adjacent nodes}
                 \label{fig:WL_iso_1}
             \end{figure}
 
-            \begin{figure}[ht]
+            \begin{figure}[H]
                 \centering
                 \includegraphics[scale=0.4]{images/graph_re_labeling.png}
                 \caption{WL-isomorphism test, we using the $label$ function to convert the string into unique labels}

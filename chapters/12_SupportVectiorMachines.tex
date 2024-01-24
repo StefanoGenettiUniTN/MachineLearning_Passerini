@@ -10,7 +10,7 @@ Support Vector Machines (SVM) are a very popular method for linear (and non-line
 \end{itemize}
 
 \section{Hyperplanes}
-    All the hyperplanes that can separate the two subsets in Figure \ref{fig:hyperplanesSVMs} classify correctly every example. If I use a perceptron I could end up with every of there planes, depending on the starting position. 
+    All the hyperplanes that can separate the two subsets in Figure \ref{fig:hyperplanesSVMs} classify correctly every example. If I use a perceptron I could end up with every of those planes, depending on the starting position. 
     \begin{figure}[ht]
         \centering
         \includegraphics[scale=0.3]{images/hyperplanes_SVMs.png}
@@ -24,7 +24,7 @@ Support Vector Machines (SVM) are a very popular method for linear (and non-line
     Given a training set $\mathcal{D}$, a classifier confidence margin is
     $$\rho = min_{(\pmb{x}, y) \in \mathcal{D}} yf(\pmb{x})$$
     This is the minimal confidence of the classifier in a correct prediction (which corresponds to $yf(\pmb{x})$ as for perceptrons) and has to be positive in order to correctly separate the classes.\\
-    The \textit{geometric margin} is the same value divided my the norm of $\pmb{w}$: 
+    The \textit{geometric margin} is the same value divided by the norm of $\pmb{w}$: 
     $$\frac{\rho}{||\pmb{w}||} = min_{(\pmb{x}, y) \in \mathcal{D}} \frac{yf(\pmb{x})}{||\pmb{w}||}$$
     }
 
@@ -79,7 +79,7 @@ Support Vector Machines (SVM) are a very popular method for linear (and non-line
         for all $(\pmb{x}_i, y_i) \in \mathcal{D}$. The hard margin is called this way because it require all the example to have a confidence at least equal to 1. Hard because it is not always possible. 
         It there is no hyperplane that has this property, the problem has no solution. Hard stands for the hard constraint, difficult to obtain. 
         This problem is a quadratic optimization problem (in $w$), with quadratic objective so overall it is a quadratic optimization problem (reasonably efficient with no local optima, but only one overall optima).\\
-        We could solve it for standard tool for quadratic optimization, since it is a convex problem, it is guaranteed that one we find a solution, is globally optimal. 
+        We could solve it for standard tool for quadratic optimization, since it is a convex problem, it is guaranteed that when we find a solution, is globally optimal. 
         
         \subsubsection{Techniques for solving the problem}
             \textbf{Karush-Kuhn-Tucker approach (KKT)}\\
@@ -114,7 +114,7 @@ Support Vector Machines (SVM) are a very popular method for linear (and non-line
                 \label{eq:Lagrangian}
             \end{equation}
             with L as \textit{Lagrangian} equivalent problem.\\
-            Again, $L$ gets minimized with respect to \pmb{w}, $w_0$ and maximized from $\alpha_i$ (then we get the solution for a saddle point).\\
+            Again, $L$ gets minimized with respect to \pmb{$w$}, $w_0$ and maximized from $\alpha_i$ (then we get the solution for a saddle point).\\
 
             We now try to solve the Lagrangian equivalent form. Let's take the gradient with respect to $\pmb{w}, w_0$ and set it to zero. 
             \begin{align*}
@@ -163,26 +163,26 @@ Support Vector Machines (SVM) are a very popular method for linear (and non-line
             Considering the first term,  $\alpha, y$ are scalars (their transpose is still a scalar) only $\pmb{x_i}, \pmb{x_j}$ are vectors. 
             We compute the product excluding the scalar part, therefore
             
-            $$L = \frac{1}{2} \sum_{i} \sum_{j} \alpha_i y_i \alpha_j y_j x_i ^T x_j \dots$$
+            $$L = \frac{1}{2} \sum_{i} \sum_{j} \alpha_i \alpha_j y_i y_j x_i ^T x_j \dots$$
             
             But the second term $ -\sum_{i=1}^m \alpha_i y_i (\sum_{i=j}^m \alpha_j y_j \pmb{x}_j)^T \pmb{x}_i$ it is actually twice the quantity described by the first term.
             In the third term, we get that $w_0$ does not depend on $i$, we can take it outside.
             At this point we get:
             
-            $$L = \frac{1}{2} \sum_{i} \sum_{j} \alpha_i y_i \alpha_j y_j \pmb{x_i} ^T \pmb{x_j}  - 
-                \sum_{i} \sum_{j} \alpha_i y_i \alpha_j y_j \pmb{x_i} ^T \pmb{x_j} - 
+            $$L = \frac{1}{2} \sum_{i} \sum_{j} \alpha_i \alpha_j y_i y_j \pmb{x_i} ^T \pmb{x_j}  - 
+                \sum_{i} \sum_{j} \alpha_i \alpha_j y_i y_j \pmb{x_i} ^T \pmb{x_j} - 
                 w_0 \sum_{i=1}^m \alpha_i y_i + \sum_{i=1}^m \alpha_i$$
 
             Since we defined $\pmb{w} =  \sum_{i=1}^m \alpha_i y_i \pmb{x}_i$ (\ref{ref:important_intermediate_result}), and also $\sum_{i=1}^m \alpha_i y_i = 0$ \ref{ref:second important result}, therefore our objective becomes:
 
             $$L(\alpha) =  \sum_{i=1}^m \alpha_i - 
-                \frac{1}{2} \sum_{i} \sum_{j} \alpha_i y_i \alpha_j y_j \pmb{x_i} ^T \pmb{x_j} $$
+                \frac{1}{2} \sum_{i} \sum_{j} \alpha_i \alpha_j y_i y_j \pmb{x_i} ^T \pmb{x_j} $$
 
             Which is the final formulation for the Lagrangian. This has to be minimized with respect to $\pmb{w}, w_0$ and maximized with respect to $\alpha$. We did get rid of the minimization, we are now going to maximize with respect to $\alpha$.\\
 
             Our objective becomes:
             $$max_{\alpha \in \R^m}\sum_{i=1}^m \alpha_i - 
-                \frac{1}{2} \sum_{i} \sum_{j} \alpha_i y_i \alpha_j y_j \pmb{x_i} ^T \pmb{x_j} $$
+                \frac{1}{2} \sum_{i} \sum_{j} \alpha_i \alpha_j y_i y_j \pmb{x_i} ^T \pmb{x_j} $$
             and our constraints:
             $$\alpha_i \geq 0 \quad i = 1, \dots, m$$
             $$\sum_{i=1}^m \alpha_i y_i = 0$$
@@ -196,11 +196,11 @@ Support Vector Machines (SVM) are a very popular method for linear (and non-line
             %If we solve for it we find the $\alpha s$, but eventually we need $\pmb{w}, w_0$. 
             We can write $f(\pmb{x})$ (the decision function) in term of the primal or the dual (remember \ref{ref:important_intermediate_result})
             
-            $$f(\pmb{x}) = \pmb{w}^T \pmb{x} + w_0 = \sum_{i_1}^m \alpha_i y_i \pmb{x}_i^T \pmb{x} + w_0$$
+            $$f(\pmb{x}) = \pmb{w}^T \pmb{x} + w_0 = \sum_{i=1}^m \alpha_i y_i \pmb{x}_i^T \pmb{x} + w_0$$
 
             \textbf{Why do we call this method \textit{support vector}?}\\
             By the KKT conditions, we get a Lagrangian and the Lagrangian multipliers ($\alpha s$). The Lagrangian \ref{eq:Lagrangian} contains a combination that stand for the margin (the inverse of the margin) and the constraints with Lagrangian multipliers. 
-            This is a min-max problem (min wrt $\pmb{w}$ and minimize wrt $\alpha $s), the results is a \textit{saddle point}. 
+            This is a min-max problem (minimize wrt $\pmb{w}$ and maximize wrt $\alpha $s), the results is a \textit{saddle point}. 
             What we know is that at this point (optimum), each of the conditions (constraint) should be equal to zero, therefore each element in the summation should be zero. This happens in two ways:
             \begin{enumerate}
                 \item $\alpha_i$ are equal to zero, which means that the example $x_i$ does not contribute to the final solution.
@@ -242,7 +242,7 @@ Support Vector Machines (SVM) are a very popular method for linear (and non-line
     $$min_{\pmb{w} \in \mathcal{X}, w_0 \in \R, \xi \in \R^m} \frac{||\pmb{w}||^2}{2} + C\sum_{i=1}^m \xi_i$$
     subject to: 
     \begin{align*}
-        y_i(\pmb{w}^T \pmb{x}_j + w_0) &\geq 1 - \xi_i \quad i = 1, \dots, m\\
+        y_i(\pmb{w}^T \pmb{x}_i + w_0) &\geq 1 - \xi_i \quad i = 1, \dots, m\\
         \xi_i &\geq 0 \quad i = 1, \dots, m
     \end{align*}
     $- \xi_i$ the slack is measuring how far we are from satisfying the constraint:
@@ -252,7 +252,7 @@ Support Vector Machines (SVM) are a very popular method for linear (and non-line
         \item the larger is $\sum_{i=1}^m \xi_i$, the larger is the number of miss-classified examples
     \end{itemize}
     By collecting all the slack variables $C\sum_{i=1}^m \xi_i$ (sum of penalties) we are trying to combine margin maximization and penalty minimization. 
-    The summation is weighted based  on $C$ a regularization parameter constant greater than zero, that gives a trade off between maximizing the margin and fitting the examples. 
+    The summation is weighted based on $C$ a regularization parameter constant greater than zero, that gives a trade off between maximizing the margin and fitting the examples. 
     If $C = \infty$ we will have to correctly predict every example (we are back to hard margins SVMs). The smaller the $C$, the more exception we allow.\\
     
     The idea is that in this objective we are combining a large margin and having few exception to the rule of large margin separation. 
@@ -260,7 +260,7 @@ Support Vector Machines (SVM) are a very popular method for linear (and non-line
     There is a more general theory under this concept: \textbf{regularization theory}. In regularization theory we have objectives to be learned that combine a \textbf{complexity term} (in this case the norm of the weight vectors, the margin but in general is a complexity of the solution) and \textbf{training errors} (in term of a loss function, measure of the error is the case of SVMs). 
     $$min_{\pmb{w} \in \mathcal{X}, w_0 \in \R, \xi \in \R^m} \frac{||\pmb{w}||^2}{2} + C\sum_{i=1}^m loss(y_i, f(\pmb{x}_i))$$
 
-    In soft margin SVMs, then we need to specify that is the loss function $loss(y_i, f(\pmb{x}_i))$. 
+    In soft margin SVMs, then we need to specify what is the loss function $loss(y_i, f(\pmb{x}_i))$. 
     Basically $\xi_i$ is the loss of false predictions
     $$\xi_i = loss(y_i, f(\pmb{x}_i))$$
     considering the constraint

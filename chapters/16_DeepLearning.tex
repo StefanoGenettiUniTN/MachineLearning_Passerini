@@ -10,7 +10,7 @@ There are two main drawback regarding kernels:
     \item Once the appropriate kernels are selected, the decision function is a linear combination of them. The kernel structure is constant and it is not learned or progressively refined.
 \end{itemize}
 
-The \textit{multilayer perceptron} (MLP) is the simpliest network of interconnected neurons.  It is a layered architecture: neurons from one layer send outputs to the following layer (this structure is named \textit{feed forward neural network}). The input layer is at the bottom of the architecture (input features). One or more hidden layers are placed in the middle (learned features). Finally on the top there is the output layer (where the prediction takes place). A graphical representation of the multilayer perceptron is illustrated in Figure \ref{fig:mlp}. \newline
+The \textit{multilayer perceptron} (MLP) is the simplest network of interconnected neurons.  It is a layered architecture: neurons from one layer send outputs to the following layer (this structure is named \textit{feed forward neural network}). The input layer is at the bottom of the architecture (input features). One or more hidden layers are placed in the middle (learned features). Finally on the top there is the output layer (where the prediction takes place). A graphical representation of the multilayer perceptron is illustrated in Figure \ref{fig:mlp}. \newline
 
 \begin{figure}
     \centering
@@ -70,7 +70,7 @@ The function is illustrated in Figure \ref{fig:sigmoid}. Actually, the curve is 
 
 \textbf{Remark:} a problem of this function is that the gradient is almost zero on the left and on the right of its domain. This result in the problem of vanishing gradient. \newline
 
-\section{Ouput layer}
+\section{Output layer}
 The deep network architecture can be adopted for many kinds of machine learning problems. \newline
 
 \subsection{Binary classification}
@@ -85,12 +85,12 @@ $$[o_1(\pmb{x}), \hdots, o_c(\pmb{x})]$$
 We adopt an activation function which ensures that each output neuron outputs a value between zero and one and that the output of the neurons sum to one. Basically, they represent a probability distribution among the possible classes. The way to do that is to use an activation function:
 
 \begin{equation}
-    f_i(x) = \frac{\text{exp}o_i(\pmb{x})}{\sum_{j=1}^c \text{exp} o_j(\pmb{x})}
+    f_i(x) = \frac{\text{exp}(o_i(\pmb{x}))}{\sum_{j=1}^c \text{exp} (o_j(\pmb{x}))}
 \end{equation}
 
 \textbf{Remark:} This is an activation function which is not computed independently for each neuron. It is a layer wise activation function (it requires a normalization step). \newline
 
-\textbf{Remark:} The exponent makes the terms non-negative. Moreover, the normalization ensures that results are between 0 and 1. \newline
+\textbf{Remark:} The exponential makes the terms non-negative. Moreover, the normalization ensures that results are between 0 and 1. \newline
 
 The decision is the highest scoring class:
 \begin{equation}
@@ -109,7 +109,7 @@ We use one output neuron $o(\pmb{x})$. The activation function is linear, \textb
 \section{Representational power of MLP}
 The purpose of this section is to reason about the representational power of multi-layer perceptrons.
 \begin{itemize}
-    \item \textbf{boolean functions} Any boolean function can be represented by some network with two layers of units. Indeed, each boolean formula can be written in DNF or CNF form (Figure \ref{fig:brutto_deep_boolean_fun}). For example we can represent a boolean formula expressed in CNF with one neuron for each clause (OR gate), with negative weights for negated literalsm and one neuron at the top (AND gate). The problem is that these representations can need an exponentially big number of terms. Some functions require an exponential number of gates (e.g. parity function). On the other hand, we can express these functions with linear number of gates with a deep network (e.g. combination of XOR gates).
+    \item \textbf{boolean functions} Any boolean function can be represented by some network with two layers of units. Indeed, each boolean formula can be written in DNF or CNF form (Figure \ref{fig:brutto_deep_boolean_fun}). For example we can represent a boolean formula expressed in CNF with one neuron for each clause (OR gate), with negative weights for negated literals and one neuron at the top (AND gate). The problem is that these representations can need an exponentially big number of terms. Some functions require an exponential number of gates (e.g. parity function). On the other hand, we can express these functions with linear number of gates with a deep network (e.g. combination of XOR gates).
     
     \item \textbf{continuous functions} Every bounded continuous function can be approximated with arbitrary small error by a network with two layers of units (sigmoid hidden activation, linear output activation).
     
@@ -186,9 +186,9 @@ We represent the fraction $\frac{\partial E(W)}{\partial a_i}$ with $\delta_l$. 
 \begin{itemize}
     \item \textbf{Output units}
     Delta is easy to compute on output units. E.g. for regression with linear outputs:
-    $$\delta_o = \frac{\delta E(W)}{\delta a_0} = \frac{\delta \frac{1}{2} (y-f(x))^2}{\delta a_0}$$
+    $$\delta_o = \frac{\partial E(W)}{\partial a_0} = \frac{\partial \frac{1}{2} (y-f(x))^2}{\partial a_0}$$
     Actually $f(x)$ is the result of the application of the non linearity on $a_o$. However, as we said above, in regression we typically do not apply non-linearity at the output layer. As a consequence in this case $f(x)=a_o$.
-    $$\delta_o = \frac{\delta \frac{1}{2} (y-a_o)^2}{\delta a_0} = -(y-a_0)$$
+    $$\delta_o = \frac{\partial \frac{1}{2} (y-a_o)^2}{\partial a_0} = -(y-a_0)$$
     This value allows us to compute the derivative of the error for the weights of the last layer.
     $$\frac{\partial E(W)}{\partial w_{oj}} = \delta_o \phi_j$$
     
@@ -237,7 +237,7 @@ Overall, this is a modular architecture: we do not care about what $F_j$ does in
     \label{fig:deep_architectures:modular structure}
 \end{figure}
 
-At the end of the day with backpropagation we perform gradient descent. Hence, backpropagation is only guaranteed to converge to a local minimum. Moreover, the error surface of a multilayer neural network can contain several minima. The literature proposes heruistic attempts to address the problem (the problem in quesion is that backpropagation is only guaranteed to converge to a local minimum):
+At the end of the day with backpropagation we perform gradient descent. Hence, backpropagation is only guaranteed to converge to a local minimum. Moreover, the error surface of a multilayer neural network can contain several minima. The literature proposes heuristic attempts to address the problem (the problem in question is that backpropagation is only guaranteed to converge to a local minimum):
 \begin{itemize}
     \item use stochastic instead of true gradient descent
     \item train multiple networks with different random weights and average or choose best
@@ -248,9 +248,9 @@ At the end of the day with backpropagation we perform gradient descent. Hence, b
 \textbf{Remark:} training kernel machines requires solving quadratic optimization problems. As a result, finding the global optimum is guaranteed (convex problem). On the other hand deep networks are more expressive in principle, but harder to train.
 
 \subsection{Stopping criterion and generalization}
-Commonly the validation set is used to choose the best configuration of the hyperparameters. In deep learning we can still use the validation set to configure the hyperparameters. However, in deep learning we can use the validation set to choose the training termination condition. Actually, overtraining the network increases possibility of overfitting training data (we could progressively fit noise penalizing generalization). Neural network models are really expressive, which means that they are complex, which means that they are prone to overfitting. In particular, overfitting occurs at later iterations, when increasingly complex surfaces are being generated. Note that at the beginning, the network is initialized with small random weights and so the decision surface is very simple. Overall, the aim is to stop learning before starting learning the noise. To do this, we use a separate validation set to estimate performance of the network and choose when to stop training. As we can seen in Figure \ref{fig:deep_training_test_valudation}, the error on the validation set at some point (when the model begins to overfit) starts to increase. In practice, we keep track of the validation error; we periodically save the best weights seen in the validation set; we stop learning when we notice that the validation error starts to increase. Probably in the case of Figure \ref{fig:deep_training_test_valudation} we keep learning until epoch 9 and than we keep the weights learned at epoch 5.\\ This technique is referred to as \textit{early stopping}. \newline
+Commonly the validation set is used to choose the best configuration of the hyperparameters. In deep learning we can still use the validation set to configure the hyperparameters. However, in deep learning we can use the validation set to choose the training termination condition. Actually, overtraining the network increases possibility of overfitting training data (we could progressively fit noise penalizing generalization). Neural network models are really expressive, which means that they are complex, which means that they are prone to overfitting. In particular, overfitting occurs at later iterations, when increasingly complex surfaces are being generated. Note that at the beginning, the network is initialized with small random weights and so the decision surface is very simple. Overall, the aim is to stop learning before starting learning the noise. To do this, we use a separate validation set to estimate performance of the network and choose when to stop training. As we can seen in Figure \ref{fig:deep_training_test_valudation}, the error on the validation set at some point (when the model begins to overfit) starts to increase. In practice, we keep track of the validation error; we periodically save the best weights seen in the validation set; we stop learning when we notice that the validation error starts to increase. Probably in the case of Figure \ref{fig:deep_training_test_valudation} we keep learning until epoch 9 and then we keep the weights learned at epoch 5.\\ This technique is referred to as \textit{early stopping}. \newline
 
-\textbf{Remark:} in backpropagation we tipically do not take into account all the examples of the training set in order to compute the error in the output layer and update the weights. Typically, we perform as an alternative, mini-batch gradient descent.
+\textbf{Remark:} in backpropagation we typically do not take into account all the examples of the training set in order to compute the error in the output layer and update the weights. Typically, we perform as an alternative, mini-batch gradient descent.
 
 \begin{figure}
     \centering
@@ -279,7 +279,7 @@ Perhaps, one of the main reasons why this architecture started to be trainable i
     f(x) = \text{max}(0, \pmb{w}^T \pmb{x})
 \end{equation}
 
-\textbf{Remark:} Essentially, the ReLU returns the maximimum between zero and the input of the activation function ($\pmb{w}^T \pmb{x}$) where $\pmb{x}$ is the input of the neuron. \newline
+\textbf{Remark:} Essentially, the ReLU returns the maximum between zero and the input of the activation function ($\pmb{w}^T \pmb{x}$) where $\pmb{x}$ is the input of the neuron. \newline
 
 \textbf{Remark:} somehow this function is similar to the hinge loss. \newline
 
@@ -302,7 +302,7 @@ To sum up:
 Another trick of the trade to face the problems related to the training of a deep neural network is regularization. As discussed above in the text, the aim of regularization theory is to minimize both model complexity and training error. So the objective function ($J(W)$) is composed by two terms: the error ($E(W)$) on the training set and the complexity of the model ($\lambda ||W||_2$) with the tradeoff parameter $\lambda$:
 $$J(W) = E(W)+\lambda ||W||_2$$
 
-For the sake of simplicity, in Figure \ref{fig:deep_regularization} we assume to have two weights ($W_1$ and $W_2$). The Euclidean norm (or 2-norm) of the weights is something that is minimal at zero and grows in circles. This means that points on the same circle have the same norm, they are indistinguishable with respect to the minimization of the regularization term $||W||_2$. Then, suppose the error function is an ellipsoid which is minimal in the center. Depending on the value of $\lambda$ we decide a tradoff between the two objectives to minimize. With this procedure we end up choosing a point where the regularization circle touches the error ellipsoid. \newline
+For the sake of simplicity, in Figure \ref{fig:deep_regularization} we assume to have two weights ($W_1$ and $W_2$). The Euclidean norm (or 2-norm) of the weights is something that is minimal at zero and grows in circles. This means that points on the same circle have the same norm, they are indistinguishable with respect to the minimization of the regularization term $||W||_2$. Then, suppose the error function is an ellipsoid which is minimal in the center. Depending on the value of $\lambda$ we decide a tradeoff between the two objectives to minimize. With this procedure we end up choosing a point where the regularization circle touches the error ellipsoid. \newline
 
 In essence \textit{2-norm regularization} penalizes weights by Euclidean norm. Weights with less influence on error get smaller values. \newline
 
@@ -358,7 +358,7 @@ Another trick of the trade to face the problems related to the training of a dee
 $$r_{ji} = r_{ji} + (\frac{\partial E(W)}{\partial w_{lj}})^2$$
 $$\pmb{w}_{ji} = w_{ji} - \frac{\eta}{\sqrt{r_{ji}}} \frac{\partial E(W)}{\partial w_{lj}}$$
 
-Using momentum we vary the learning rate only with respect to time, but the learning rate value is the same for all the directions. In high-dimensional problems, the behaviour of the function can be very different in each direction. From this, we understand that using the same learning rate for all directions is clearly suboptmial. The idea of the adagard approach is to develop an adaptive gradient such that:
+Using momentum we vary the learning rate only with respect to time, but the learning rate value is the same for all the directions. In high-dimensional problems, the behaviour of the function can be very different in each direction. From this, we understand that using the same learning rate for all directions is clearly suboptimal. The idea of the adagrad approach is to develop an adaptive gradient such that:
 \begin{itemize}
     \item Reduce learning rate in steep directions
     \item Increase learning rate in gentler directions
@@ -411,13 +411,13 @@ Some advantages of batch normalization are:
     \item Regularizes the model
 \end{itemize}
 
-Another trick of the trade to face the problems related to the training of a deep neural network is \textit{layerwise pre-training}. Moder solution for pre-training are:
+Another trick of the trade to face the problems related to the training of a deep neural network is \textit{layerwise pre-training}. Modern solution for pre-training are:
 \begin{itemize}
     \item Supervised pre-training: layerwise training with actual labels
     
     \item Transfer learning: train network on similar task, discard last layers and retrain on target task
     
-    \item Multi-level supervision: auxhiliary output nodes at intermediate layers to speed up learning
+    \item Multi-level supervision: auxiliary output nodes at intermediate layers to speed up learning
 \end{itemize}
 Nota: non ho capito benissimo questi punti. Non vengono spiegati o approfonditi molto bene ma non credo siano importanti ai fini dell'esame.
 
@@ -481,14 +481,14 @@ Nowadays, autoencoders are no more used to perform layerwise pre-training.
 \end{figure}
 
 \subsection{Convolutional network (CNN)}
-\textit{Convolutional neural networks} (Figure \ref{fig:cnn}) are a consolidated architecture in the field of image processing and image classification. Images are seen as two dimensional matrixes of pixels or as multidimensional objects. For example, we can imagine an image as a structure composed by an additional channel representing image color (we often use a matrix for each channel). CNNs allow to understand correlations among spatially closed pixels. Moreover, convolutional neural network has to implement location invariance (e.g. translation inside the image): if we detect a boat, its position inside the image does not affect the classification output. In order to achieve these purposes CNNs use \textit{convolution filters}. These are matrices of weights which are used to scan the image from the very top down to the end. Each input portion of the image inside the matrix is combined (aggregated) into one value. A convolutional neural network can adopt more than one filter. Every filter produces its own representation for the given image. The purpose of convolution filters is to extract local features. \\ In addition to convolution, CNNs perform also pooling to provide invariance to local variations. Pooling allow us to combine the local prediction in a small area, and this leads to more robustness against translations for example. A common pooling implementation is \textit{max pooling} where we take the maximum value of the matrix in a certain area. The maximum value is used to produce a new smaller representation of the matrix. \\ Overall, convolution filters and pooling are the two main components of a CNN such that:
+\textit{Convolutional neural networks} (Figure \ref{fig:cnn}) are a consolidated architecture in the field of image processing and image classification. Images are seen as two dimensional matrices of pixels or as multidimensional objects. For example, we can imagine an image as a structure composed by an additional channel representing image color (we often use a matrix for each channel). CNNs allow to understand correlations among spatially closed pixels. Moreover, convolutional neural network has to implement location invariance (e.g. translation inside the image): if we detect a boat, its position inside the image does not affect the classification output. In order to achieve these purposes CNNs use \textit{convolution filters}. These are matrices of weights which are used to scan the image from the very top down to the end. Each input portion of the image inside the matrix is combined (aggregated) into one value. A convolutional neural network can adopt more than one filter. Every filter produces its own representation for the given image. The purpose of convolution filters is to extract local features. \\ In addition to convolution, CNNs perform also pooling to provide invariance to local variations. Pooling allow us to combine the local prediction in a small area, and this leads to more robustness against translations for example. A common pooling implementation is \textit{max pooling} where we take the maximum value of the matrix in a certain area. The maximum value is used to produce a new smaller representation of the matrix. \\ Overall, convolution filters and pooling are the two main components of a CNN such that:
 \begin{itemize}
     \item filters should learn to identify patterns inside the input image
     
     \item the pooling process tries to understand if in the given area it has been found something 
 \end{itemize}
 
-A combination of filters and convoluion layers is repeated along the network in order to progressively find higher level patterns. The first layers understand simple patterns like straight lines; subsequently, further layers can combine patterns to construct more complex and higher level patterns. In this way we obtain a hierarchy of filters to compose complex features from simpler ones (e.g. pixels to edges to shapes). All these matrices are learnt in an end to end fashion. \\
+A combination of filters and convolution layers is repeated along the network in order to progressively find higher level patterns. The first layers understand simple patterns like straight lines; subsequently, further layers can combine patterns to construct more complex and higher level patterns. In this way we obtain a hierarchy of filters to compose complex features from simpler ones (e.g. pixels to edges to shapes). All these matrices are learnt in an end to end fashion. \\
 At some point the convolutional neural network ends with a multi layer perceptron architecture: all the features are placed in a vector and processed with densely fully connected layers. Finally, at the output level we reach a representation which allows us to perform the (e.g. classification) task.
 
 \begin{figure}
@@ -721,49 +721,49 @@ Notice that, for example, the input at node $C$ are the features of node $C$, bu
 
 Now, to train the model we need to define a loss function on the embeddings. We can feed the embeddings into any loss function and run stochastic gradient descent to train the weight parameters. Training can be unsupervised or supervised.
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/graphNeuralNetworl.png}
     \caption{Graph Neural Networks.}
     \label{fig:graph_neural_networks}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/networksVsImages.png}
     \caption{Conventional Machine Learning and Deep Learning tools are specialized in simple data types. Like images with the same structure and size, which we can think of as fixed-size grid graphs. Text and speech are sequences, so we can think of them as line graphs.}
     \label{fig:networksVsImages}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/cnnOnAnImage.png}
     \caption{The core concept behind CNNs introduces hidden convolution and pooling layers to identify spatially localized features via a set of receptive fields in kernel form.}
     \label{fig:cnnOnAnImage}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/fromInputNetworkToEmbeddingSpace.png}
     \caption{The encoder function $\text{Enc}(u)$ and $\text{Enc}(v)$, converts the feature vectors to $z_u$ and $z_v$.}
     \label{fig:fromInputNetworkToEmbeddingSpace}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/computationalGraph.png}
     \caption{Locality information can be achieved by using a \textit{computational graph}.}
     \label{fig:computationalGraph}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/computationalGraphNeuralNetwork.png}
     \caption{Once the locality information preserves the computational graph, we start aggregating. This is basically done using neural networks.}
     \label{fig:computationalGraphNeuralNetwork}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/computationalGraphNeuralNetwork1.png}
     \caption{The forward propagation rule in GNNs. It determines how the information from the input will go to the output side of the neural network.}

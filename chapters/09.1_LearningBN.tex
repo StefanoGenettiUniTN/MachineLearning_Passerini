@@ -1,4 +1,4 @@
-\chapter{Learining BN}
+\chapter{Learning BN}
 \label{cha:learning_BN}
 As explained in Section \ref{sec::practicalSuggestions} when building a Bayesian Network it is crucial to collaborate with a domain expert in order to follow as much as possible causality relationships among variables. At the beginning of this section we assume that the structure of the model is given.\\
 We are given a dataset (training set) of examples $\mathcal{D} = \{\pmb{x}(1), ..., \pmb{x}(N)\}$. Each example $\pmb{x}(i)$ is a configuration for \textit{all} (complete data) or \textit{some} (incomplete data) variables in the model (which is the Bayesian network). \newline
@@ -9,7 +9,25 @@ The simplest approach consists of learning the parameters maximizing the likelih
 $${\pmb{\theta}}^{\mathit{max}} = {\mathit{argmax}}_{\pmb{\theta}} p(\mathcal{D}|\pmb{\theta}) = \mathit{argmax}_{\pmb{\theta}} \mathcal{L} (\mathcal{D}, \pmb{\theta})$$
 As we have discussed in Section \ref{par:maximum_likelyhood_estim} this method is referred to as \textit{Maximum likelihood estimation}. In the formula $\mathcal{L} (\mathcal{D}, \pmb{\theta})$ is the likelihood function to maximize with respect to the parameters. \newline
 
-Probabilistic graphical models allow to graphically represent relationships among examples and parameters. Suppose we have three variables linked together with a tail-to-tail configuration as illustrated in Figure \ref{fig:tailToTailLearningBN}. What is more, we have $N$ examples of this Bayesian network as schematized in Figure \ref{fig:learningBNExample1}. At this point, our aim is to write down an expression for $p(\mathcal{D}|\pmb{\theta})$. Since data are iid given the parameters $\pmb{\theta}$, then we can write:
+Probabilistic graphical models allow to graphically represent relationships among examples and parameters. Suppose we have three variables linked together with a tail-to-tail configuration as illustrated in Figure \ref{fig:tailToTailLearningBN}. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/tailToTailLearningBN.png}
+    \caption{Three variables linked together with a tail-to-tail configuration.}
+    \label{fig:tailToTailLearningBN}
+\end{figure}
+
+What is more, we have $N$ examples of this Bayesian network as schematized in Figure \ref{fig:learningBNExample1}. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{images/learningBNExample1.png}
+    \caption{$N$ examples of the Bayesian network reported in Figure \ref{fig:tailToTailLearningBN}.}
+    \label{fig:learningBNExample1}
+\end{figure}
+
+At this point, our aim is to write down an expression for $p(\mathcal{D}|\pmb{\theta})$. Since data are iid given the parameters $\pmb{\theta}$, then we can write:
 $$p(\mathcal{D}|\pmb{\theta}) = \prod_{i=1}^N p(\pmb{x}(i) | \pmb{\theta})$$
 Now, we can go through the factorization of the BN to rewrite $p(\pmb{x}(i) | \pmb{\theta})$:
 $$p(\mathcal{D}|\pmb{\theta}) = \prod_{i=1}^N \prod_{j=1}^m p(\pmb{x}_j(i) | \mathit{pa}_j(i), \pmb{\theta})$$
@@ -35,20 +53,6 @@ It is important to notice that the directional arrows are from the parameters to
 \end{align*}
 Notice that the parameters $\theta_{X_1}, \theta_{X_2|X_1}, \theta_{X_3|X_1}$, do not depend on the specific example.\\
 If we try to draw the corresponding network we get the model illustrated in Figure \ref{fig:learningBNSmallExample}.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\textwidth]{images/tailToTailLearningBN.png}
-    \caption{Three variables linked together with a tail-to-tail configuration.}
-    \label{fig:tailToTailLearningBN}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{images/learningBNExample1.png}
-    \caption{$N$ examples of the Bayesian network reported in Figure \ref{fig:tailToTailLearningBN}.}
-    \label{fig:learningBNExample1}
-\end{figure}
 
 \begin{figure}
     \centering
@@ -187,7 +191,7 @@ Our aim is to compute the expected sufficient statistics (i.e. the expected coun
     
     \item If $X_i(l)$ and $\mathit{Pa}_i(l)$ are observed for $\pmb{X}_l$, it is either zero or one. (In the case of complete data, for each example we check if the particular configuration holds for that example and we sum up obtaining an integer which is the real count).
     
-    \item Otherwise, run Bayesian inference to compute probabilities from observed variables. ($\sum_{l=1}^n$ is the some over the set of examples) ($X_i(l)$ represents node $i$ in the $l^{\mathit{TH}}$ example) ($\mathit{Pa}_i(l)$ represents the parent of node $i$ in the $l^{\mathit{TH}}$ example)
+    \item Otherwise, run Bayesian inference to compute probabilities from observed variables. ($\sum_{l=1}^n$ is the sum over the set of examples) ($X_i(l)$ represents node $i$ in the $l^{\mathit{TH}}$ example) ($\mathit{Pa}_i(l)$ represents the parent of node $i$ in the $l^{\mathit{TH}}$ example)
 \end{itemize}
 
 This step is called \textit{expectation step} (e-step).
@@ -219,5 +223,5 @@ So far, we have assumed that the structure of the network is given (and we try t
     
     \item \textbf{Score-based:} assign a (probabilistic) score to each possible structure, define a search procedure looking for the structure maximizing the score. With this approach we move in the space of possible structures guided by the score.
     
-    \item \textbf{Model-averaging:} given that we do no know the network structure, we treat it as a random variable. We assign a prior probability to each structure, and average prediction over all possible structures weighed by their probabilities (full Bayesian, intractable since the number of possible structures is exponential with respect to the number of variables). This approach is a kind of ensemble learning method where we generate more than one structure and average the prediction in a similar way as we have seen for random forests. This could increase the robustness of the predictions but leads often to less explainable results.
+    \item \textbf{Model-averaging:} given that we do not know the network structure, we treat it as a random variable. We assign a prior probability to each structure, and average prediction over all possible structures weighed by their probabilities (full Bayesian, intractable since the number of possible structures is exponential with respect to the number of variables). This approach is a kind of ensemble learning method where we generate more than one structure and average the prediction in a similar way as we have seen for random forests. This could increase the robustness of the predictions but leads often to less explainable results.
 \end{itemize}

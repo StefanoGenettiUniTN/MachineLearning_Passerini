@@ -39,10 +39,10 @@ Suppose we have to model a joint probability distribution $p(x_1, \hdots, x_m)$ 
 $$p(x_1, \hdots, x_m) = \prod_{i=1}^m p(x_i | \mathit{Pa}_{x_i})$$
 where $\mathit{Pa}_{x_i}$ stands for the parents of $x_i$. Consider for example the Bayesian Network illustrated in Figure \ref{fig:bayesianNetworkExample}:
 $$p(x_1, \hdots, x_7) = p(x_1)p(x_2)p(x_3)p(x_4|x_1,x_2,x_3)p(x_5|x_1,x_3)p(x_6|x_4)p(x_7|x_4,x_5)$$
-Factorization is useful beacuse it breaks down a formula involving many variables into a product of formulas typically involving less values. In the example above, modeling $p(x_1,\hdots, x_7)$ as a single joint distribution, it would have required taking into consideration $2^7$ possible parameters (assuming only binary variables for simplicity), one for each possible configuration. On the other hand, the pieces on the left side of the equation involve significantly less paramaters:
+Factorization is useful beacuse it breaks down a formula involving many variables into a product of formulas typically involving less values. In the example above, modeling $p(x_1,\hdots, x_7)$ as a single joint distribution, it would have required taking into consideration $2^7$ possible parameters (assuming only binary variables for simplicity), one for each possible configuration. On the other hand, the pieces on the left side of the equation involve significantly less parameters:
 \begin{itemize}
     \item $p(x_1),p(x_2),p(x_3)$ have 2 possible configurations
-    \item $p(x_4|x_1,x_2,x_3)$ has $2^4$ possible configurations beacause it involves 4 variables
+    \item $p(x_4|x_1,x_2,x_3)$ has $2^4$ possible configurations because it involves 4 variables
     \item $p(x_5|x_1,x_3), p(x_7|x_4,x_5)$ have $2^3$ possible configurations
     \item $p(x_6|x_4)$ has $2^4$ possible configurations
 \end{itemize}
@@ -100,7 +100,7 @@ The proof that this is the case follows: \newline
 At this point we can conclude: factorization $\Leftrightarrow$ I-map.
 
 \defi{\textbf{Bayesian Network} \label{def:bayesian_network}\\
-A \textit{Bayesian Network} is a pair ($\mathcal{G}, p$) where $p$ factorizes over $\mathcal{G}$ (which is a Bayesian network structure) and it is represented as a set of conditional probability distributions (cpd) associated with the nodes of $\mathcal{G}$ ($p(x_1 | \mathit{Pa}_{x_1}), p(x_1 | \mathit{Pa}_{x_1}), \hdots, p(x_m | \mathit{Pa}_{x_m})$).
+A \textit{Bayesian Network} is a pair ($\mathcal{G}, p$) where $p$ factorizes over $\mathcal{G}$ (which is a Bayesian network structure) and it is represented as a set of conditional probability distributions (cpd) associated with the nodes of $\mathcal{G}$ ($p(x_1 | \mathit{Pa}_{x_1}), p(x_2 | \mathit{Pa}_{x_2}), \hdots, p(x_m | \mathit{Pa}_{x_m})$).
 
 $$p(x_1, \hdots, x_m) = \prod_{i=1}^m p(x_i | \mathit{Pa}_{x_i})$$
 }
@@ -254,7 +254,7 @@ $$p(a,b,c) = p(b|c)p(c|a)p(a)$$
 We use this result to compute $p(a,b)$:
 $$p(a,b) = \sum_c p(a,b,c) = p(a) \sum_c p(b|c)p(c|a)$$
 There is no way applying probability rules to satisfy the equality $p(a) \sum_c p(b|c)p(c|a) = p(a)p(b)$. Given this, we can conclude that $a$ and $b$ are \textbf{not independent}:
-$$p(a,b) = \sum_c p(b|c)p(c|a) \neq p(a)p(b)$$
+$$p(a,b) = p(a)\sum_c p(b|c)p(c|a) \neq p(a)p(b)$$
 On the other hand $a$ and $b$ are \textbf{conditionally independent given} $c$:
 $$p(a,b | c) = \frac{p(a,b,c)}{p(c)} = \frac{p(b|c)p(c|a)p(a)}{p(c)}$$
 Applying the Bayes rule we notice that:
@@ -266,8 +266,8 @@ Intuitively, if you have already observed the effects of a certain cause, you do
 \textbf{Example:}
 \begin{itemize}
     \item $a=$Cloudy
-    \item $b=$Rainy
-    \item $c=$Get wet
+    \item $c=$Rainy
+    \item $b=$Get wet
 \end{itemize}
 Assume that a student of the DISI department of the University of Trento named Giovanni Valer wakes up and notices that it's a cloudy day. He realizes that, if he goes to the university by bike, he could get wet. Indeed, since it is cloudy, it could rain. The fact that it is cloudy influences the chance of getting wet (causality reasoning).\\
 Suppose not that Giovanni wakes up and it is raining but at the same time there is the sun. Even if it is not cloudy, Giovanni gets wet if he travels by bike to the university. Evidently, given that it is raining, the fact that it is not cloudy does not influence the probability of getting wet.
@@ -448,7 +448,7 @@ Suppose that now, we are interesting in the posterior probability after observin
 
 \begin{align*}
 P(F=0 | G=0, B=0) = \\
-&=\frac{P(G=0|F=0,B=0)P(F=0|B=0)}{P(G=0|B=0) \simeq 0.111}
+&=\frac{P(G=0|F=0,B=0)P(F=0|B=0)}{P(G=0|B=0)} \simeq 0.111
 \end{align*}
 
 From this we understand that $F$ and $B$ are related once $G$ is known. If they were unrelated, knowing something about $B$ would not change the probability value. On the contrary, the probability that the tank is empty decreases after observing that the battery is also flat. The battery condition \textit{explains away} the observation that the fuel gauge reads empty. The probability is sill greater than the prior one, because the fuel gauge observation still gives some evidence in favour of an empty tank.
@@ -621,7 +621,7 @@ Quite different BN structures can actually encode the exact same set of independ
 \end{figure}
 
 \section{I-maps vs distributions}
-As explained above, for a structure $\mathcal{G}$ to be an I-map for $p$, it does not need to encode all its independences. As a consequence a fully connected graph is an I-map of any $p$i defined over its variables. Indeed, a fully connected graph does not encode any independency and so, for sure it does not encode an independency which is not in $p$. Obviously, a fully connected graph is not useful for our purposes.
+As explained above, for a structure $\mathcal{G}$ to be an I-map for $p$, it does not need to encode all its independences. As a consequence a fully connected graph is an I-map of any $p_i$ defined over its variables. Indeed, a fully connected graph does not encode any independency and so, for sure it does not encode an independency which is not in $p$. Obviously, a fully connected graph is not useful for our purposes.
 
 \defi{\textbf{Minimal I-map} \label{def:minimalIMap}\\
 A \textit{minimal I-map} for $p$ is an I-map $\mathcal{G}$ which can't be "reduced" into a $\mathcal{G}' \subset \mathcal{G}$ (by removing edges) that is also an I-map for $p$. In other words it is no more possible to remove edges from $\mathcal{G}$ without introducing independences which do not hold in $p$.

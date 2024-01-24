@@ -78,7 +78,7 @@ In a sense, the functional margin represents the margin before predicting the op
     \begin{equation}
         r^x = \frac{f(\pmb{x})}{||\pmb{w}||}
     \end{equation}
-    It is a normalize version of the functional margin.
+    It is a normalized version of the functional margin.
 }
 
 \textbf{Remark:} the distance from the origin to the hyperplane is:
@@ -238,7 +238,14 @@ Gradient descent works as follows:
     \item techniques exist to adaptively modify $\eta$
 \end{itemize}
 
-In the case of the linear classifier, the misclassification loss is picewise constant and so it is a poor candidate for gradient descent. Indeed, applying gradient descent with a function like the one represented in Figure \ref{fig:scalini} the gradient is either 0 or it does not exist. In order to apply gradient descent approach, we need functions with a smoother behaviour. As a consequence we adopt a different training rule, the \textit{perceptron training rule}. Following this approach, the error is the sum of the functional margins ($f(\pmb{x})$) of incorrectly classified examples:
+In the case of the linear classifier, the misclassification loss is piecewise constant and so it is a poor candidate for gradient descent. Indeed, applying gradient descent with a function like the one represented in Figure \ref{fig:scalini} the gradient is either 0 or it does not exist. In order to apply gradient descent approach, we need functions with a smoother behaviour. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/gradini.png}
+    \caption{The misclassification loss is piecewise constant and so it is a poor candidate for gradient descent.}
+    \label{fig:scalini}
+\end{figure}
+As a consequence we adopt a different training rule, the \textit{perceptron training rule}. Following this approach, the error is the sum of the functional margins ($f(\pmb{x})$) of incorrectly classified examples:
 \begin{equation}
     \label{perceptronTrainingRule1}
     E(\pmb{w}; \mathcal{D}) = \sum_{(\pmb{X},y) \in \mathcal{D}_E} -y f(\pmb{x})s
@@ -251,12 +258,7 @@ With this approach we are taking into consideration the confidence of our predic
 
 \textbf{Remark:} We write $ - y f(\pmb{x})$ because we want to maximize the confidence of the correct predictions (or analogously minimize the incorrect predictions characterized by high confidence). \newline
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{images/gradini.png}
-    \caption{The misclassification loss is picewise constant and so it is a poor candidate for gradient descent.}
-    \label{fig:scalini}
-\end{figure}
+
 
 We apply gradient descent on Equation \ref{perceptronTrainingRule1}:
 \begin{align*}
@@ -386,7 +388,7 @@ From this last equation we observe that the boundary is actually a hyperplane (F
     \label{fig:oneVsAllMulticlassClassification}
 \end{figure}
 
-\subsection{ONE vs ALL (all pairs)}
+\subsection{ONE vs ONE (all pairs)}
 The aim of this multiclass classification solution is to learn one binary classifier for each pair of classes:
 \begin{itemize}
     \item positive examples from one class

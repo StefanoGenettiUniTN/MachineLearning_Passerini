@@ -7,7 +7,7 @@ Evaluation requires to define performance measures to be optimized. The evaluati
     \item computing statistical significance of difference between learning algorithms
 \end{itemize}
 
-The training loss function measures the cost paid for predicting $f(x)$ for output $y$ ($f(x)$ is the predicted value; $y$ is the ground truth). It is designed to boost effectiveness and efficiency of learning algorithms (e.g. \textit{hinge loss} for SVM). Typically the purpose of the training is to minimize a training loss. As a consequence, ideal training loss functions are smooth, differentiable. As a result, not all the performance measures can be used as loss functions. Actually there is a difference between a loss function and the final performance measure. For example, \textit{accuracy} (i.e. fraction of examples correcly classified) is a performance measure which can not be used as a loss function. More in depth, accuracy (or misclassification cost) is never used as a loss function, since it is \textit{piecewise constant} and so not amenable to gradient descent. A function is said to be piecewise constant if it is locally constant in connected regions separated by a possibly infinite number of lower-dimensional boundaries. Square wave (Figure \ref{fig:square_wave}) is an example of piecewise constant function. This latter is not differentiable in correspondence of the jumps and has first derivative equals to zero when it is constant. The gradient cannot be computed or it is zero and so it does not indicate where to move in order to find the optimum. 
+The training loss function measures the cost paid for predicting $f(x)$ for output $y$ ($f(x)$ is the predicted value; $y$ is the ground truth). It is designed to boost effectiveness and efficiency of learning algorithms (e.g. \textit{hinge loss} for SVM). Typically the purpose of the training is to minimize a training loss. As a consequence, ideal training loss functions are smooth, differentiable. As a result, not all the performance measures can be used as loss functions. Actually there is a difference between a loss function and the final performance measure. For example, \textit{accuracy} (i.e. fraction of examples correctly classified) is a performance measure which can not be used as a loss function. More in depth, accuracy (or misclassification cost) is never used as a loss function, since it is \textit{piecewise constant} and so not amenable to gradient descent. A function is said to be piecewise constant if it is locally constant in connected regions separated by a possibly infinite number of lower-dimensional boundaries. Square wave (Figure \ref{fig:square_wave}) is an example of piecewise constant function. This latter is not differentiable in correspondence of the jumps and has first derivative equals to zero when it is constant. The gradient cannot be computed or it is zero and so it does not indicate where to move in order to find the optimum. 
 
 \begin{figure}
     \centering
@@ -18,7 +18,7 @@ The training loss function measures the cost paid for predicting $f(x)$ for outp
 
 An example of training loss function is \textit{cross entropy loss}.\newline
 
-Typically it is useful to consider multiple performance meaures which can highlight complementary information about the model under study.
+Typically it is useful to consider multiple performance measures which can highlight complementary information about the model under study.
 
 \section{Binary classification}
 \label{sec::performanceBinaryClassification}
@@ -89,7 +89,7 @@ For standard classification tasks, there is a measure which combines recall and 
 
 The most common version of F-measure is the $F_1$-measure which sets $\beta=1$. $F_1$ is the \textit{harmonic mean} of precision and recall. A good trade off between precision and recall is needed in order to have a high value of $F_1$. $F_1$ is a good performance measure (better then accuracy) in the case of unbalanced datasets.
 \begin{equation}
-    F_1 = \frac{2(\mathit{Pre} \cdot 2\mathit{Rec})}{\mathit{Pre} + \mathit{Rec}}
+    F_1 = \frac{2(\mathit{Pre} \cdot \mathit{Rec})}{\mathit{Pre} + \mathit{Rec}}
 \end{equation}
 Classifiers often provide a confidence in the prediction (e.g. random forests, margin or SVM). In these cases it is possible to improve precision and/or recall by moving the confidence threshold for deciding if an element has to be classified positively or negatively. With a high threshold we would maximize precision. On the other hand, low values of threshold tend to maximize recall. By varying threshold from min to max possible value, we obtain a curve of performance measures. This curve can be shown plotting one measure (recall) against the complementary one (precision) (see Figure \ref{fig:precisionRecallCurve}).
 
@@ -218,12 +218,12 @@ It is not important to understand why we divide the result by $k-1$. In essence,
     \mathit{Var}[\Bar{S}] \approx \frac{1}{k^2} \sum_{j=1}^k \frac{1}{k-1} \sum_{i=1}^k(S_i - \Bar{S})^2 = \frac{1}{k^2} \frac{k}{k-1} \sum_{i=1}^k(S_i - \Bar{S})^2 = \frac{1}{k} \frac{1}{k-1} \sum_{i=1}^k(S_i - \Bar{S})^2
 \end{equation}
 
-\section{Hipothesis testing}
-We want to compare generalization performance of two learning algorithms. We want to know whether observed difference in performance is \textit{statisticall significant} (and not due to some noisy evaluation). Hypothesis testing allows to test the statistical significance of a hypothesis (e.g. the two predictors have different performance). \newline
+\section{Hypothesis testing}
+We want to compare generalization performance of two learning algorithms. We want to know whether observed difference in performance is \textit{statistically significant} (and not due to some noisy evaluation). Hypothesis testing allows to test the statistical significance of a hypothesis (e.g. the two predictors have different performance). \newline
 
 \textbf{Null hypothesis:} $H_0$ default hypothesis, for rejecting which evidence should be provided \newline
 
-\textbf{Test statistic:} Given a sample of $k$ realizations of random variables $X_1, \hdots, X_k$, a \textit{test statistic} is a statistic $T=h(X_1, \hdots ,X_k)$ whose value is used to decide wether to reject $H_0$ or not. \newline
+\textbf{Test statistic:} Given a sample of $k$ realizations of random variables $X_1, \hdots, X_k$, a \textit{test statistic} is a statistic $T=h(X_1, \hdots ,X_k)$ whose value is used to decide whether to reject $H_0$ or not. \newline
 
 Example: given a set measurements $X_1, \hdots, X_k$, decide whether the actual value to be measured is zero.
 \begin{itemize}
