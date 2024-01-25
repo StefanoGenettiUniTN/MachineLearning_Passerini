@@ -4,6 +4,24 @@
 While for supervised models we use labelled examples, for unsupervised we do not have any labels, but only data.
 
 \section{Clustering}
+
+\subsection{K-means clustering}
+        This is a quite popular naive approach for clustering. This method assumes that you decide a priori the number of clusters. Each cluster will be represented by its mean $\mu_i$. The idea is to assign example to the clusters with the closer mean.\\
+
+        The algorithm works within this line:
+        \begin{enumerate}
+            \item initialize cluster means $\mu_1, \dots, \mu_n$ (a way of doing it is at random)
+            \item iterate until no mean changes:
+            \begin{enumerate}
+                \item assign each example to cluster with nearest mean
+                \item update cluster means according to assigned examples
+            \end{enumerate}
+        \end{enumerate}
+
+        This is a very simple approach, it is still used especially when we have some form of processing (dimensionality reduction ...) that maps example in low dimensional space, where k-means is sufficient. \\
+        Combined with other approached is still something that is currently used frequently.
+        
+
     \subsection{Distance metrics}
         In order to compute some clustering, we need to define a metric for the concept of "distance" (aka notion of \textit{similarity}), here we report the main metrics that can be used:
         \begin{enumerate}
@@ -27,23 +45,7 @@ While for supervised models we use labelled examples, for unsupervised we do not
         $$E = \sum _{i=1}^k \sum_{\pmb{X} \in \mathcal{D}_i} || \pmb{x} - \mu_i|| ^ 2$$
         This basically tells us how bad the approximation of a cluster is using the means. 
 
-    \subsection{K-means clustering}
-        This is a quite popular naiive approach for clustering. This method assumes that you decide a priori the number of clusters. Each cluster will be represented by its mean $\mu_i$. The idea is to assign example to the clusters with the closer mean.\\
-
-        The algorithm works within this line:
-        \begin{enumerate}
-            \item initialize cluster means $\mu_1, \dots, \mu_n$ (a way of doing it is at random)
-            \item iterate until no mean changes:
-            \begin{enumerate}
-                \item assign each example to cluster with nearest mean
-                \item update cluster means according to assigned examples
-            \end{enumerate}
-        \end{enumerate}
-
-        This is a very simple approach, it is still used especially when we have some form of processing (dimensionality reduction ...) that maps example in low dimensional space, where k-means is sufficient. \\
-        Combined with other approached is still something that is currently used frequently.
-        
-    \section{Gaussian Mixture Model (GMM)}
+\section{Gaussian Mixture Model (GMM)}
         The idea is again assuming a priori the number of clusters I want to get, then I suppose that each cluster is represented as a Gaussian distribution. I need to estimate the mean and possibly the variance (or co-variance) of the Gaussian distribution.
 
         \begin{figure}[ht]
@@ -63,12 +65,12 @@ While for supervised models we use labelled examples, for unsupervised we do not
         This is an example of different ways of fitting the same data, so based on the approach we select we can get different solutions.\\
 
         \subsection{Spherical GMM}
-            This is the easier way of using GMM, therefore mean estimation. Of course the problem of applying GMM, we need to estimate parameter, but we can no longer use maximum likelyhood estimation because we do not have any label for the data. 
+            This is the easier way of using GMM, therefore mean estimation. Of course the problem of applying GMM, we need to estimate parameter, but we can no longer use maximum likelihood estimation because we do not have any label for the data. 
             Here is an example of the so called \textit{Latent Variables} (which consists in a probability of assigning the sample to each cluster). Based on this, we can do Expectation Maximization.
             \begin{enumerate}
                 \item start with initialization of parameters, 
                 \item we compute the expected value for the latent variables (expected value for clusters assignment)
-                \item using this expected value, we maximize the likelyhood through the parameters
+                \item using this expected value, we maximize the likelihood through the parameters
                 \item this gives me a new value of the parameter and then iterate until convergence
             \end{enumerate}
             
@@ -76,7 +78,7 @@ While for supervised models we use labelled examples, for unsupervised we do not
             \textbf{Settings}:
             \begin{itemize}
                 \item A dataset of $n$ examples
-                \item for each example $x_i$, a cluster assignment (the latent variable) is modelled as $z_i1, \dots, z_ik$ (for each sample, a value for each cluster) modelled with a one-hot encoding (vector of binary variables, we have 1 only for the correct class, 0 otherwise)
+                \item for each example $x_i$, a cluster assignment (the latent variable) is modelled as $z_{i1}, \dots, z_{ik}$ (for each sample, a value for each cluster) modelled with a one-hot encoding (vector of binary variables, we have 1 only for the correct class, 0 otherwise)
                 \item we assume for simplicity that we are only estimating the mean of the gaussian, the variance is assumed to be known
             \end{itemize}
             
@@ -87,7 +89,7 @@ While for supervised models we use labelled examples, for unsupervised we do not
                 \item iterate until the difference in maximum likelihood is below a certain threshold:
                 \begin{enumerate}
                     \item \textbf{E-step}: calculate the expected value $E[z_{ij}]$ of each latent variable assuming that the current hypotheses holds.
-                    \item \textbf{M-step}: calculate new maximum likelyhood values (new hypothesis) $h' = {\mu_1, \dots, \mu_k}$ assuming values of latent variables are their expected values. Replace $h$ with $h'$.
+                    \item \textbf{M-step}: calculate new maximum likelihood values (new hypothesis) $h' = {\mu_1, \dots, \mu_k}$ assuming values of latent variables are their expected values. Replace $h$ with $h'$.
                 \end{enumerate}
             \end{enumerate}
             
@@ -107,7 +109,7 @@ While for supervised models we use labelled examples, for unsupervised we do not
             
             \textbf{Expectation maximization}:\\
             This is a general strategy used to deal with optimization and maximization of the parameters of the hypothesis, in a setting in which I have unobserved data. Generally I have a dataset made of observed part $X$ and unobserved part $Z$.
-            We would like to estimate the hypothesis maximizing the (log) likelyhood of the data, where the latter include both $X, Z$. 
+            We would like to estimate the hypothesis maximizing the (log) likelihood of the data, where the latter include both $X, Z$. 
             $$h^* = \text{argmax}_h E_Z [ln \quad p(X, Z | h)]$$
             We want to maximize given the expectation of $Z$. Unobserved data $Z$ should be treated as random variables governed by the distribution depending on both $X, h$. The fact is that we do not know $h$, which is indeed the variable we want to estimate.\\
             The iterative procedure is described as follows:
@@ -115,7 +117,7 @@ While for supervised models we use labelled examples, for unsupervised we do not
                 \item initialize hypothesis $h$
                 \item iterate until convergence
                 \begin{enumerate}
-                    \item \textbf{E-step}: compute the expected (log) likelyhood of an hypothesis $h'$ for the full data, where the unobserved data distribution is modelled according to the current hypothesis $h$ (from previous iterations) and the observed data as
+                    \item \textbf{E-step}: compute the expected (log) likelihood of an hypothesis $h'$ for the full data, where the unobserved data distribution is modelled according to the current hypothesis $h$ (from previous iterations) and the observed data as
                     $$Q(h', h) = E_Z[ln (p(X, Z | h'))|h, X]$$
                     The expectation for the missing data $Z$ (in GMM is the cluster assigment vector) is computed with respect to $h, Z$ which are given by the last iteration and the known data.
                     \item \textbf{M-step}: replace the current hypothesis with the one maximizing $Q(h', h)$
@@ -137,7 +139,7 @@ While for supervised models we use labelled examples, for unsupervised we do not
             In which any generic $x$ is $x_i$ and $z$ is a vector for each $x$ and each of the possible clusters (one-hot encoding). We can model the right end side with a Gaussian distribution, but instead of having a single mean, we get all differences $(x_i - \mu_j ') ^2$ and then we sum them up in some way that is weighted with the cluster assignment probability $z_{ij}$. 
             If $z_{ij}$ is one-hot, we will recover a single Gaussian, otherwise we will have a mixture. \\
 
-            If I compute the log likelyhood on the full dataset: 
+            If I compute the log likelihood on the full dataset: 
             $$ln(p(X, Z| h)) = 
             \sum _{i=1} ^n 
             \left(
@@ -146,7 +148,7 @@ While for supervised models we use labelled examples, for unsupervised we do not
                     \frac{(x_i - \mu_j ' )^2}{2 \sigma ^ 2}
             \right)
             $$
-            This is just log of product over the example of the likelyhood (properties of logarithm used on the previous formula). \\
+            This is just log of product over the example of the likelihood (properties of logarithm used on the previous formula). \\
             
             What we still need is the expectation over $E_Z[\dots]$. This is computed as follows: 
             \begin{align*}
@@ -170,9 +172,9 @@ While for supervised models we use labelled examples, for unsupervised we do not
                             \frac   {e^{- \frac{1}{2 \sigma^ 2} (x_i -\mu_j)^2 }}
                                     { \sum _{l=1} ^ k e^{- \frac{1}{2 \sigma^ 2} (x_i - \mu_l)^2 }}
             \end{align*}
-            The expectation of the log-likelyhood is computed with $h'$ while the second is computed starting from $h$ (the old one, therefore this quantity is computable). Given that I have the formula of the likelyhood, then I can maximize it.\\
+            The expectation of the log-likelihood is computed with $h'$ while the second is computed starting from $h$ (the old one, therefore this quantity is computable). Given that I have the formula of the likelihood, then I can maximize it.\\
             The next step is taking this expectation and then I perform maximization over the new hypothesis. \\
-            The likelyhood maximization gives this first result (since there is a minus sign, we can minimize instead of maximize), then we can set the derivation equal to zero with respect to $\mu_j '$ in order to find the maximum (in the example we are considering just one specific $\mu_j$ instead summing for every component).
+            The likelihood maximization gives this first result (since there is a minus sign, we can minimize instead of maximize), then we can set the derivation equal to zero with respect to $\mu_j '$ in order to find the maximum (in the example we are considering just one specific $\mu_j$ instead summing for every component).
             \begin{figure} [ht]
                 \centering
                 \includegraphics[scale=0.4]{images/m-step_GMM_maximization.png}
@@ -200,9 +202,9 @@ While for supervised models we use labelled examples, for unsupervised we do not
                 \item \textbf{Average silhouette}: this method gives us a precise definition for the number of clusters. This is based on the fact that by increasing the number of clusters, each of them becomes more homogeneous. But on the other hand also different clusters also become similar to each other (splitting data further). We need to look for inter-clusters dissimilarity (not only intra-clusters similarity).\\
                 The procedure is pretty simple:
                 \begin{enumerate}
-                    \item compute the average similarity between $i$ and examples if its cluster (defined in terms of distances $d$), this is the \textbf{intra-cluster} similarity: 
+                    \item compute the average similarity between $i$ and examples of its cluster (defined in terms of distances $d$), this is the \textbf{intra-cluster} similarity: 
                     $$a_i = d(i, C) = \frac{1}{|C|} \sum_{j \in C} d(i, j)$$
-                    \item compute the average dissimilarity between $i$ ans examples of each cluster $C'$ different from its own cluster $C$ and take the minimum (\textbf{inter-cluster} dissimilarity). We take the minimum to get the lower dissimilarity:
+                    \item compute the average dissimilarity between $i$ and examples of each cluster $C'$ different from its own cluster $C$ and take the minimum (\textbf{inter-cluster} dissimilarity). We take the minimum to get the lower dissimilarity:
                     $$b_i = \text{min}_{C' \neq C} d(i, C')$$
                     \item the silhouette coefficient is:
                     $$s_i = \frac{b_i - a_i}{\text{max}(a_i, b_i)}$$

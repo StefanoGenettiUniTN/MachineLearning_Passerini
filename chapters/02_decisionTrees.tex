@@ -142,7 +142,7 @@ In this case, splitting according to unique identifiers would result in high val
 Assume that an example $x$ with class $c(x)$ has missing value for attribute $A$. When attribute $A$ has to be tested at node $n$, the following solutions could be adopted:
 \begin{itemize}
     \item \textit{Simple solution}. Assign to $x$ the most common attribute value among the examples in $n$ or (during training) the most common attribute value among the examples in $n$ with class $c(x)$.
-    \item \textit{Complex solution}. Propagate $x$ to each of the children of $n$, with a fractional value equal to the proportion of examples with the corresponding attribute value.\\At training time, you assign the leaf the majority vote among the training examplex which reach that leaf considering their weight.\\At test time, if we process an example with missing attributes it ends up in multiple leaves with a given probability. Each leaf votes with a weight which depends on the fraction of the test example which reached that leaf.
+    \item \textit{Complex solution}. Propagate $x$ to each of the children of $n$, with a fractional value equal to the proportion of examples with the corresponding attribute value.\\At training time, you assign the leaf the majority vote among the training examples which reach that leaf considering their weight.\\At test time, if we process an example with missing attributes it ends up in multiple leaves with a given probability. Each leaf votes with a weight which depends on the fraction of the test example which reached that leaf.
 \end{itemize}
 
 \begin{figure}
@@ -154,7 +154,7 @@ Assume that an example $x$ with class $c(x)$ has missing value for attribute $A$
 
 \section{Random forest}
 
-A common technique to reduce overfitting is \textit{ensamble learning}. Following this method we learn multiple models at training time. At test time we average the results or take the majority vote of the models.
+A common technique to reduce overfitting is \textit{ensemble learning}. Following this method we learn multiple models at training time. At test time we average the results or take the majority vote of the models.
 
 \subsection{Bootstrap sampling and bagging}
 \paragraph{}

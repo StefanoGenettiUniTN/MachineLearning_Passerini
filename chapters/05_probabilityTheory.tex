@@ -80,7 +80,7 @@
         $$p =  \left[ \frac{1}{6}, \frac{1}{6}, \frac{1}{6}, \frac{1}{6}, \frac{1}{6}, \frac{1}{6} \right] $$
         
         \defi{\textbf{Multinomial distribution (general case)}\\
-        Given $n$ repetition of an event which can end uo in $m$ possible outcome, $p=\{p_1, \dots, p_m\}$ the probability of each of the outcomes, the probability mass function is
+        Given $n$ repetition of an event which can end in $m$ possible outcome, $p=\{p_1, \dots, p_m\}$ the probability of each of the outcomes, the probability mass function is
         $$P(x_1, \dots, x_m; p_1, \dots, p_m, n) = \dfrac{n!}{\prod\limits_{i=1}^mx_i!}\prod\limits_{i=1}^mp_i^{x_i}$$
         In this distribution $E[x_i] = np_i$, $Var[x_i] = np_i(1-p_i)$ and $Cov[x_i, x_j] = -np_i p_j$
         }
@@ -126,11 +126,11 @@
     $$P(x|y)P(y) = p(y|x)P(x)$$
     }
     
-    This is important because it allows to get information about a posterior probability given the initial conditions and the likelyhood of the linkage.
+    This is important because it allows to get information about a posterior probability given the initial conditions and the likelihood of the linkage.
     
-    $$posterior = \frac{likelyhood \times prior}{evidence}$$
+    $$posterior = \frac{likelihood \times prior}{evidence}$$
     
-    Prior and evidence are the data related to the single variables and likelyhood is the effect produced by the cause.\\
+    Prior and evidence are the data related to the single variables and likelihood is the effect produced by the cause.\\
     These rules apply also to more than two variables:
     $$P(y) = \sum_x \sum_z P(x, y, z)$$
     $$P(y) = \sum_x \sum_z P(y | x, z) P(x, z)$$

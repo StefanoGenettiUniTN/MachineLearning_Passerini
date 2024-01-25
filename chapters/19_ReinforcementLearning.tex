@@ -17,7 +17,7 @@ The typical challenges faced by the leaner during this process are:
 \end{figure}
 
 \section{Applications}
-Reinforcement learning has several real world applications. The main research fields where reinformcement learning solutions are adopted are:
+Reinforcement learning has several real world applications. The main research fields where reinforcement learning solutions are adopted are:
 
 \begin{itemize}
     \item videogames:
@@ -80,11 +80,11 @@ An \textit{environment history} is a sequence of states. For example, a certain 
 
 Given an environment history $s_0, s_1, s_2, \hdots$, the utility can be computed in two main ways:
 \begin{itemize}
-    \item \textit{additive reward}
+    \item \textit{additive rewards}
     \begin{equation}
         U([s_0, s_1, s_2, \hdots]) = R(s_0) + R(s_1) + R(s_2) + \hdots
     \end{equation}
-    \item \textit{discounted reward}
+    \item \textit{discounted rewards}
     \begin{equation}
         U([s_0, s_1, s_2, \hdots]) = R(s_0) + \gamma R(s_1) + \gamma^2 R(s_2) + \hdots
     \end{equation}
@@ -130,7 +130,7 @@ As opposed to supervised learning methods, in reinforcement learning, the learni
     \item \textbf{value-based methods:}
     \begin{itemize}
         \item the goal of the agent is to optimize the utility of a state $U(s)$ which quantifies "how good" is a state
-        \item the value of each state $s$ is the total amount of the reward an agen can expect to collect over the future from $s$
+        \item the value of each state $s$ is the total amount of the reward an agent can expect to collect over the future from $s$
         \item maximizing $U(s)$ for each state, we indirectly optimize the policy
     \end{itemize}
     \item \textbf{policy base methods}: we define a policy which we need to optimize directly. To do this, we typically learn a neural network which outputs a \textit{stochastic policy}, i.e. a probability distribution over different actions.
@@ -393,6 +393,13 @@ The first solution to deal with this limitation is to rely on \textit{function a
 \subsection{Deep Q-learning}
 A refinement of the previous idea is to approximate $U(s)$ and $Q(s,a)$ with a parametric function and introduce a \textbf{deep neural network} to learn the parameters (Figure \ref{fig:reinforcementLearningDeep}).
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/deepQLearning.png}
+    \caption{Q learning and deep Q learning comparison.}
+    \label{fig:reinforcementLearningDeep}
+\end{figure}
+
 \subsubsection{state utility}
 \begin{equation}
     U(s) \approx U_\theta(s)
@@ -441,9 +448,3 @@ The stochastic gradient update rule is:
     \theta = \theta - \alpha \nabla_{\theta}E((s,a), s')
 \end{equation}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{images/deepQLearning.png}
-    \caption{Q learning and deep Q learning comparison.}
-    \label{fig:reinforcementLearningDeep}
-\end{figure}
