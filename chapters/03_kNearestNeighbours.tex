@@ -1,101 +1,127 @@
 \chapter{K-nearest neighbors}
 \label{cha:KNN}
 
-\defi{\textbf{K-Nearest Neighbors (kNN)} \label{def:knn}\\
-K-nearest neighbors algorithm is a non-parametric supervised learning method. It allows to define the belonging of an example to an area of influence of the data used for learning.
-}
+\defi{\textbf{K-Nearest Neighbors (kNN)} \label{def:knn}\\ K-nearest neighbors algorithm is a non-parametric supervised learning method. It allows to define the belonging of an example to an area of influence of the data used for learning. }
 
-\textbf{Remark:} kNN is non-parametric since it does not make any assumptions on the data being studied, i.e., the model is distributed from the data. \newline
+\textbf{Remark:} kNN is non-parametric since it does not make any assumptions on
+the data being studied, i.e., the model is distributed from the data.
+\newline
 
-\textbf{Remark:} kNN is a lazy algorithm because it does not use the training data points to make any generalisation. Which implies: \begin{itemize}
-    \item You expect little to no explicit training phase,
-    \item The training phase is pretty fast,
-    \item kNN keeps all the training data since they are needed during the testing phase.
-\end{itemize}
-
-Given a training set, each point has its own area of influence, as the area in which is most likely to position new samples that can be labelled as the main point.
-Training data can be positioned in a multidimensional space, so the concept of distance we use is not the "trivial" one: euclidean distance is not always the best option. 
-The $k$ in \textbf{kNN} means that the number of closest neighbors we consider is equal to $k$ (e.g. if $k=3$ and two of them are points of a class A and only one belongs to a class B, then the point we are trying to classify will belong to class A, regardless of the position of the three points in training set).\\
-
-\defi{\textbf{Concept of distance (or metric)} \label{defi:distance}\\
-Given a set $\mathcal{X}$ a function $d:\mathcal{X} \times \mathcal{X} \rightarrow \R^{+}_{0}$ is a metric for $\mathcal{X}$ if for any $x, y, z \in \mathcal{X}$ the following proprieties are satisfied:
+\textbf{Remark:} kNN is a lazy algorithm because it does not use the training data
+points to make any generalisation. Which implies:
 \begin{itemize}
-    \item \textbf{reflexivity}: $d(x, y)=0 \Leftrightarrow x=y$
-    \item \textbf{symmetry}: $d(x, y) = d(y, x)$
-    \item \textbf{triangle inequality}: $d(x, y) + d(y, z) \geq d(x, z)$
+	\item You expect little to no explicit training phase,
+
+	\item The training phase is pretty fast,
+
+	\item kNN keeps all the training data since they are needed during the testing
+		phase.
 \end{itemize}
-}
+
+Given a training set, each point has its own area of influence, as the area in
+which is most likely to position new samples that can be labelled as the main
+point. Training data can be positioned in a multidimensional space, so the
+concept of distance we use is not the "trivial" one: euclidean distance is not always
+the best option. The $k$ in \textbf{kNN} means that the number of closest neighbors
+we consider is equal to $k$ (e.g. if $k=3$ and two of them are points of a class
+A and only one belongs to a class B, then the point we are trying to classify
+will belong to class A, regardless of the position of the three points in training
+set).\\
+
+\defi{\textbf{Concept of distance (or metric)} \label{defi:distance}\\ Given a set $\mathcal{X}$ a function $d:\mathcal{X}\times \mathcal{X}\rightarrow \mathbb{R}^{+}_{0}$ is a metric for $\mathcal{X}$ if for any $x, y, z \in \mathcal{X}$ the following proprieties are satisfied: \begin{itemize}\item \textbf{reflexivity}: $d(x, y)=0 \Leftrightarrow x=y$
+
+\item \textbf{symmetry}: $d(x, y) = d(y, x)$
+
+\item \textbf{triangle inequality}: $d(x, y) + d(y, z) \geq d(x, z)$\end{itemize} }
 
 An example of a metric distance definition is the euclidean distance:\\
 
-$$d(x, y) = \sqrt{\sum_{i=1}^n (x_{i} - y_{i})^{2}}$$
+\[
+	d(x, y) = \sqrt{\sum_{i=1}^{n}(x_{i}- y_{i})^{2}}
+\]
 
-The pseudo-algorithm for classification problems \ref{def:binary_classification} \ref{def:multiclass_classification} \ref{def:multilabel_classification} can be formalized with Algorithm \ref{alg:knn_classification}. 
+The pseudo-algorithm for classification problems can be formalized with Algorithm
+\ref{alg:knn_classification}.
 
 \begin{algorithm}
-\caption{kNN for classification \label{alg:knn_classification}}
-\begin{algorithmic}
-\FORALL{test examples $x$} 
-    \FORALL {training examples $(x_i, y_i)$}
-        \STATE compute distance $d(x, x_i)$
-    \ENDFOR
-    \STATE select the k-nearest neighbors\\
-    \RETURN class of x as majority class among k-neighbors
-\ENDFOR
-\end{algorithmic}
+	\caption{kNN for classification \label{alg:knn_classification}}
+	\begin{algorithmic}
+		\FORALL{test examples $x$} \FORALL {training examples $(x_{i}, y_{i})$}
+		\STATE compute distance $d(x, x_{i})$ \ENDFOR \STATE select the k-nearest
+		neighbors\\ \RETURN class of x as majority class among k-neighbors \ENDFOR
+	\end{algorithmic}
 \end{algorithm}
 
 The selection of the majority vote can be formalized as:\\
 
 \begin{equation}
-    argmax_y {\sum_{i=1}^k \delta(y, y_{i})}
+	argmax_{y}{\sum_{i=1}^k \delta(y, y_{i})}
 \end{equation}
 
-The pseudo-algorithm for regression problems \ref{def:regression} can be formalized with Algorithm \ref{alg:knn_regression}. 
+The pseudo-algorithm for regression problems can be formalized with Algorithm
+\ref{alg:knn_regression}.
 
 \begin{algorithm}
-\caption{kNN for regression \label{alg:knn_regression}}
-\begin{algorithmic}
-\FORALL{test examples $x$} 
-    \FORALL {training examples $(x_i, y_i)$}
-        \STATE compute distance $d(x, x_i)$
-    \ENDFOR
-    \STATE select the k-nearest neighbors\\
-    \RETURN the average output value among neighbors
-\ENDFOR
-\end{algorithmic}
+	\caption{kNN for regression \label{alg:knn_regression}}
+	\begin{algorithmic}
+		\FORALL{test examples $x$} \FORALL {training examples $(x_{i}, y_{i})$}
+		\STATE compute distance $d(x, x_{i})$ \ENDFOR \STATE select the k-nearest
+		neighbors\\ \RETURN the average output value among neighbors \ENDFOR
+	\end{algorithmic}
 \end{algorithm}
 
 The computation of the average value can be formalized as:\\
 
-$$\frac{1}{k} \sum_{i=1}^k y_{i}$$
+\[
+	\frac{1}{k}\sum_{i=1}^{k}y_{i}
+\]
 
 \section{Characteristic of kNN learning}
-    Here are reported the main features of the kNN algorithm:
-    \begin{itemize}
-        \item \textbf{instance-based learning}: the models results calibrated for the test example to be processed.\\
-        \textit{Instance-based learning} (sometimes called \textit{memory-based learning}) is a family of learning algorithms that, instead of performing explicit generalization, compare new problem instances with instances seen in training, which have been stored in memory. In other words, this methods construct hypotheses directly from the training instances themselves. This means that the hypothesis complexity can grow with the data: in the worst case, a hypothesis is a list of $n$ training items and the computational complexity of classifying a single new instance is $\mathcal{O}(n)$. One advantage that instance-based learning has over other methods of machine learning is its ability to adapt its model to previously unseen data. Instance-based learners may simply store a new instance or throw an old instance away.\\Because computation is postponed until a new instance is observed, these algorithms are sometimes referred to as \textit{lazy}. 
-        \item \textbf{lazy learning}: computation is mostly deferred to the classification phase (speed up research)
-        \item \textbf{local learner}: assumes prediction should be mainly influenced by nearby instances (an area is affected by a class)
-        \item \textbf{uniform feature weighting}: all features are uniformly weighted in computing distances, no data point or distance affect the classification in any way since the given data point in the training set is considered in the set of nearest neighbours.
-    \end{itemize}
-    
-    Anyhow, for the last point, a further implementation of the \textit{kNN algorithm} is available: its upgrade consists in giving the data a different weight proportional to the inverse of the distance.\\
-    
-    For the classification problem, the selection of the majority vote is: 
-    \begin{equation}
-        argmax_y {\sum_{i=1}^k w_{i}\delta(y, y_{i})}
-    \end{equation}
-    
-    while for the regression problem is:
-    \begin{equation}
-        \frac{ {\sum_{i=1}^k w_{i}y_{i}}}
-        { {\sum_{i=1}^k w_{i}}}
-    \end{equation}    
-    
-    where 
-    
-    \begin{equation}
-        w_{i} = \frac{1}{d(x, x_{i})}
-    \end{equation}    
-    
+Here are reported the main features of the kNN algorithm:
+\begin{itemize}
+	\item \textbf{instance-based learning}: the models results calibrated for the test
+		example to be processed.\\ \textit{Instance-based learning} (sometimes called
+		\textit{memory-based learning}) is a family of learning algorithms that,
+		instead of performing explicit generalization, compare new problem instances
+		with instances seen in training, which have been stored in memory. In other words,
+		this methods construct hypotheses directly from the training instances
+		themselves. This means that the hypothesis complexity can grow with the data:
+		in the worst case, a hypothesis is a list of $n$ training items and the computational
+		complexity of classifying a single new instance is $\mathcal{O}(n)$. One
+		advantage that instance-based learning has over other methods of machine
+		learning is its ability to adapt its model to previously unseen data. Instance-based
+		learners may simply store a new instance or throw an old instance away.\\Because
+		computation is postponed until a new instance is observed, these algorithms are
+		sometimes referred to as \textit{lazy}.
+
+	\item \textbf{lazy learning}: computation is mostly deferred to the classification
+		phase (speed up research)
+
+	\item \textbf{local learner}: assumes prediction should be mainly influenced by
+		nearby instances (an area is affected by a class)
+
+	\item \textbf{uniform feature weighting}: all features are uniformly weighted in
+		computing distances, no data point or distance affect the classification in
+		any way since the given data point in the training set is considered in the
+		set of nearest neighbours.
+\end{itemize}
+
+Anyhow, for the last point, a further implementation of the \textit{kNN
+algorithm} is available: its upgrade consists in giving the data a different weight
+proportional to the inverse of the distance.\\
+
+For the classification problem, the selection of the majority vote is:
+\begin{equation}
+	argmax_{y}{\sum_{i=1}^k w_{i}\delta(y, y_{i})}
+\end{equation}
+
+while for the regression problem is:
+\begin{equation}
+	\frac{ {\sum_{i=1}^k w_{i}y_{i}}}{ {\sum_{i=1}^k w_{i}}}
+\end{equation}
+
+where
+
+\begin{equation}
+	w_{i}= \frac{1}{d(x, x_{i})}
+\end{equation}
