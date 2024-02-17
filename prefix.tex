@@ -1,62 +1,53 @@
-\documentclass[oneside]{book}
-\usepackage[english]{babel}
-\usepackage{listings}
-\usepackage{hyperref}
-\usepackage[font=small,labelfont=bf]{caption}
-\usepackage{multicol}
-\usepackage[ruled,vlined,algo2e]{algorithm2e}
-\usepackage[toc, page]{appendix}
-\usepackage{float}
-\usepackage{amsfonts} 
-\usepackage{algorithm}
-\usepackage{algorithmic}
-% TRY USE THESE TWO INSTEAD:
-% \usepackage{algpseudocode}
-% \usepackage{algorithmicx}
-\usepackage{amssymb}
-\usepackage{derivative}
-\usepackage[framemethod=tikz]{mdframed}
-\usepackage{amsmath}
-\usepackage{graphicx} %Loading the package
-\usepackage{amsmath} %More flavours for equations
-\usepackage{mathtools} %More flavours for equations
-\usepackage[makeroom]{cancel} %Semplification bar
-\usepackage{subcaption}
-\usepackage{enumitem}
-\usepackage{bbold} %identity matrix
-\usepackage{multirow}
+\usepackage[english]{babel} % Sets the document language to English
+\usepackage{listings} % For including source code listings
+\usepackage{hyperref} % For creating hyperlinks within the document
+\usepackage[font=small, labelfont=bf]{caption} % Customizes captions for figures and tables
+\usepackage{multicol} % Allows multicolumn layout
+\usepackage[ruled, vlined, algo2e]{algorithm2e} % Typesets algorithms
+\usepackage[toc, page]{appendix} % Adds appendices to the document
+\usepackage{float} % Improves the interface for defining floating objects
+\usepackage{amsfonts} % Provides additional fonts, especially mathematical symbols
+\usepackage{algorithm} % Float environment for algorithms
+\usepackage{algorithmic} % Typesets algorithms
+\usepackage{amssymb} % Provides various mathematical symbols
+\usepackage{derivative} % For typesetting derivatives
+\usepackage[framemethod=tikz]{mdframed} % Creates framed boxes with shaded backgrounds
+\usepackage{tikz} % Package for creating diagrams and drawings
+\usetikzlibrary{shapes, arrows.meta, positioning} % Importing TikZ libraries for additional functionalities.
+\usepackage{amsmath} % Enhanced math features
+\usepackage{graphicx} % Loading the package for including graphics
+\usepackage{amsmath} % Additional math features
+\usepackage{mathtools} % Enhances mathematical typesetting
+\usepackage[makeroom]{cancel} % Adds a cancellation bar in math mode
+\usepackage{subcaption} % Provides support for subfigures and subcaptions
+\usepackage{enumitem} % Customizes lists
+\usepackage{bbold} % Provides the identity matrix symbol
+\usepackage{multirow} % Allows table cells to span multiple rows
 
-\graphicspath{images} %Setting the graphicspath
-\setcounter{secnumdepth}{5}
+\graphicspath{images} % Sets the path for graphics files
+\setcounter{secnumdepth}{5} % Sets the depth for section numbering
 
-\lstset{
-    frame=tb, % draw a frame at the top and bottom of the code block
-    tabsize=4, % tab space width
-    showstringspaces=false, % don't mark spaces in strings
-    numbers=none, % display line numbers on the left
-    commentstyle=\color{green}, % comment color
-    keywordstyle=\color{red}, % keyword color
-    stringstyle=\color{blue}, % string color
-    breaklines=true,
-    postbreak=\mbox{\textcolor{green}{$\hookrightarrow$}\space}
+\lstset{ 
+  frame=tb, % Draws a frame at the top and bottom of code blocks
+  tabsize=4, % Sets tab space width
+  showstringspaces=false, % Does not mark spaces in strings
+  numbers=none, % Does not display line numbers
+  commentstyle=\color{green}, % Sets the comment color
+  keywordstyle=\color{red}, % Sets the keyword color
+  stringstyle=\color{blue}, % Sets the string color
+  breaklines=true, postbreak=\mbox{\textcolor{green}{$\hookrightarrow$}\space} % Enables line wrapping with a symbol at the end
 }
 
+\newcommand{\defi}[1]{\begin{mdframed} [nobreak=true,hidealllines=false,linecolor=blue!40,linewidth=2pt,backgroundcolor=blue!5,]{#1} \end{mdframed}}
+% Defines a command for framed definitions with a blue background
 
+\newcommand{\defib}[2]{\begin{mdframed} [hidealllines=false,linecolor=blue!40,linewidth=2pt,backgroundcolor=blue!5,] \begin{center} \textbf{{#1}} \end{center} \vspace{2mm} {#2} \end{mdframed}}
+% Defines a command for framed definitions with a blue background and a title
 
-\newcommand\defi[1]{\begin{mdframed}[nobreak=true,hidealllines=false,linecolor=blue!40,linewidth=2pt,backgroundcolor=blue!5,]{#1}\end{mdframed}}
+\newcommand{\theo}[1]{\begin{mdframed} [hidealllines=false,linecolor=yellow!40,linewidth=2pt,backgroundcolor=yellow!5,]{#1} \end{mdframed}}
+% Defines a command for framed theorems with a yellow background
 
-\newcommand\defib[2]{\begin{mdframed}[hidealllines=false,linecolor=blue!40,linewidth=2pt,backgroundcolor=blue!5,]\begin{center}\textbf{{#1}}\end{center}\vspace{2mm}{#2}\end{mdframed}}
+\newcommand{\sumup}[1]{\begin{mdframed} [hidealllines=false,linecolor=red!40,linewidth=2pt,backgroundcolor=red!5,]{#1} \end{mdframed}}
+% Defines a command for framed summaries with a red background
 
-\newcommand\theo[1]{\begin{mdframed}[hidealllines=false,linecolor=yellow!40,linewidth=2pt,backgroundcolor=yellow!5,]{#1}\end{mdframed}}
-
-
-\newcommand\sumup[1]{\begin{mdframed}[hidealllines=false,linecolor=red!40,linewidth=2pt,backgroundcolor=red!5,]{#1}\end{mdframed}}
-
-\newcommand {\R}{\mathbb{R}}
-
-\newcommand\tab[1][0.5cm]{\hspace*{#1}} %Tab
-
-\author{
-  Giacomo Fantoni \\
-  \small Telegram: \href{https://t.me/GiacomoFantoni}{@GiacomoFantoni} \\[3pt]
-  Github: \href{https://github.com/giacThePhantom/AlgoritmiStruttureDati}{https://github.com/giacThePhantom/AlgoritmiStruttureDati}}
+\newcommand{\tab}[1][0.5cm]{\hspace*{#1}} % Defines a command for adding horizontal space
