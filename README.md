@@ -2,8 +2,6 @@
 
 Welcome to the Machine Learning Notes repository! Here you'll find comprehensive notes on various topics covered in the Machine Learning course of the Master Degree program at the University of Trento. Whether you're a student studying for exams or someone eager to dive into the world of machine learning, you're in the right place! 🎓
 
-This repository is a fork version of the original repository created by Vittoria Ossanna and Stefano Genetti, who did an excellent job documenting the course materials. The original repository can be found [here](https://github.com/StefanoGenettiUniTN/MachineLearning_Passerini).
-
 In this updated version, I've added additional content, including a new chapter, and fixed all typographical errors to provide you with the best learning experience possible. 🚀
 
 ## Contents 📋
@@ -32,8 +30,8 @@ In this updated version, I've added additional content, including a new chapter,
 
 To download a PDF version of these notes, click on the image below:
 
-|<a href="https://github.com/federicobrancasi/MachineLearningNotes/blob/main/images/MachineLearningNotesCover.jpg"><img src="https://github.com/federicobrancasi/MachineLearningNotes/blob/main/images/MachineLearningNotesCover.jpg" width="300"/></a>|
-|:--:|
-|Machine Learning Notes|
+| <a href="https://github.com/StefanoGenettiUniTN/MachineLearning_Passerini/blob/main/MachineLearningNotes.pdf"><img src="https://github.com/StefanoGenettiUniTN/MachineLearning_Passerini/blob/main/images/MachineLearningNotesCover.jpg" width="300"/></a> |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                                                                                   Machine Learning Notes                                                                                                                   |
 
 Feel free to explore, learn, and contribute to this repository! Let's dive into the fascinating world of machine learning together! 🤗💻
